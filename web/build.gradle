@@ -11,6 +11,14 @@ sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
+    maven {
+        name = 'myRepo'
+        url = "https://accendl-maven.pkg.coding.net/repository/mymavenrepo/myweibo"
+        credentials {
+            username "myweibo-1660661200164"
+            password "639a9df034c0cb9c14b6ff8c7ad130fff8cce3c4"
+        }
+    }
 }
 
 dependencies {
@@ -22,4 +30,36 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            artifact tasks.named("jar")
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'myRepo'
+            url = "https://accendl-maven.pkg.coding.net/repository/mymavenrepo/myweibo"
+            credentials {
+                username "myweibo-1660661200164"
+                password "639a9df034c0cb9c14b6ff8c7ad130fff8cce3c4"
+            }
+        }
+    }
+}
+
+java {
+    //withJavadocJar()
+    // withSourcesJar()
+}
+
+tasks.named("bootJar") {
+    archiveClassifier = 'boot'
+}
+
+tasks.named("jar") {
+    archiveClassifier = ''
 }
