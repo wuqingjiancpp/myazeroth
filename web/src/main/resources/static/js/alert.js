@@ -1,1 +1,1 @@
-alert("ok");
+$('#test').append("test suc");
