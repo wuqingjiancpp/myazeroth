@@ -65,4 +65,9 @@ tasks.named("jar") {
     archiveClassifier = ''
 }
 
+tasks.named("bootRun") {
+    sourceResources sourceSets.main
+}
+
+
 
