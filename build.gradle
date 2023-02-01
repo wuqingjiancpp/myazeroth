@@ -1,8 +1,16 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.2'
-    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
-    id 'java'
+    id "java"
+    id("org.springframework.boot") version "2.7.8"
+    id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
+
+dependencyManagement {
+    imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    }
+}
+
+
 
 group = 'com.accendl'
 version = '0.0.1-SNAPSHOT'
