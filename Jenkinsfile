@@ -45,7 +45,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'docker build -t accendl/myweibo .'
-                sh 'docker login'
                 sh 'docker image push accendl/myweibo'
             }
         }
