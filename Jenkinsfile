@@ -1,8 +1,8 @@
 pipeline {
     agent any
-//     environment {
-//         JAVA_HOME='/usr/lib/jvm/jdk-17'
-//     }
+    environment {
+        JAVA_HOME='/var/jenkins_home/jdk17-1/jdk-17'
+    }
     stages {
         stage('init'){
             steps {
