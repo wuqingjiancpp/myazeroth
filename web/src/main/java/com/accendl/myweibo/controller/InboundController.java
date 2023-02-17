@@ -1,4 +1,4 @@
-package com.accendl.myweibo;
+package com.accendl.myweibo.controller;
 
 import com.accendl.myweibo.dto.Inbound;
 import org.springframework.stereotype.Controller;

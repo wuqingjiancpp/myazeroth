@@ -30,12 +30,12 @@
         </thead>
         <tbody>
         <tr th:each="row : ${inboundList}">
-            <td ><div class="col themed-grid-col" th:text="${{row.id}}"></div></td>
-            <td ><div class="col themed-grid-col" th:text="${{row.sku}}"></div></td>
-            <td ><div class="col themed-grid-col" th:text="${{row.owner}}"></div></td>
-            <td ><div class="col themed-grid-col" th:text="${{row.skuName}}"></div></td>
-            <td ><div class="col themed-grid-col" th:text="${{row.inboundQty}}"></div></td>
-            <td ><div class="col themed-grid-col" th:text="${{row.createTime}}"></div></td>
+            <td ><div class="col themed-grid-col" th:text="${row.id}"></div></td>
+            <td ><div class="col themed-grid-col" th:text="${row.sku}"></div></td>
+            <td ><div class="col themed-grid-col" th:text="${row.owner}"></div></td>
+            <td ><div class="col themed-grid-col" th:text="${row.skuName}"></div></td>
+            <td ><div class="col themed-grid-col" th:text="${row.inboundQty}"></div></td>
+            <td ><div class="col themed-grid-col" th:text="${row.createTime}"></div></td>
         </tr>
         </tbody>
     </table>
