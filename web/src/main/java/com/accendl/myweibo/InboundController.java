@@ -2,8 +2,9 @@ package com.accendl.myweibo;
 
 import com.accendl.myweibo.dto.Inbound;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,7 +14,7 @@ import java.util.List;
 @RequestMapping("/inbound")
 public class InboundController {
 
-    @GetMapping("")
+    @GetMapping
     public String list() {
         return "inbound";
     }
@@ -32,6 +33,7 @@ public class InboundController {
             inbound.setId(i+1);
             inboundList.add(inbound);
         }
-        return inboundList;
+//        return inboundList.stream().filter(item->(item.getId()==id)).toList();
+        return  inboundList;
     }
 }
