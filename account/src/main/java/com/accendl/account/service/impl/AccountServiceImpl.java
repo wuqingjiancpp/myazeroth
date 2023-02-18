@@ -1,23 +1,22 @@
 package com.accendl.account.service.impl;
 
-import com.accendl.account.dto.CustomUser;
+import com.accendl.account.dto.UserDTO;
 import com.accendl.account.service.IAccountService;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @DubboService(version = "1.0.0")
 public class AccountServiceImpl implements IAccountService {
 
-    private final UsersServiceImpl usersService;
+    private final UserServiceImpl userService;
 
-    public AccountServiceImpl(UsersServiceImpl usersService) {
-        this.usersService = usersService;
+    public AccountServiceImpl(UserServiceImpl usersService) {
+        this.userService = usersService;
     }
 
     @Override
-    public CustomUser findCustomUserByEmail(String email) throws Exception {
-        return usersService.findCustomUserByEmail(email);
+    public UserDTO findCustomUserByEmail(String email) throws Exception {
+        return userService.findCustomUserByEmail(email);
     }
 }

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author wuqingjian
  * @since 2023-02-18
  */
-public class Authorities implements Serializable {
+public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class Authorities implements Serializable {
 
     @Override
     public String toString() {
-        return "Authorities{" +
+        return "Authority{" +
         "username = " + username +
         ", authority = " + authority +
         "}";

@@ -13,10 +13,7 @@ import javax.swing.*;
 public class AzerothApplication {
 
     public static void main(String[] args) throws Exception{
-//       ApplicationContext applicationContext =
-               SpringApplication.run(AzerothApplication.class, args);
-//        ServerServiceImpl serverService = applicationContext.getBean(ServerServiceImpl.class);
-//        System.out.println(serverService.info());
+        SpringApplication.run(AzerothApplication.class, args);
     }
 
 }

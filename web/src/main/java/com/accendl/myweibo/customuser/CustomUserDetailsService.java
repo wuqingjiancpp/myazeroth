@@ -1,8 +1,6 @@
 package com.accendl.myweibo.customuser;
 
-import com.accendl.account.dto.CustomUser;
 import com.accendl.myweibo.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .unmodifiableList(AuthorityUtils.createAuthorityList("ROLE_USER"));
 
         public CustomUserDetails(CustomUser customUser) {
-            super(customUser.getId(), customUser.getEmail(), customUser.getPassword());
+            super(customUser);
         }
 
         @Override

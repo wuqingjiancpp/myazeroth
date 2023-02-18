@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.accendl'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
@@ -22,7 +22,6 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
 
     implementation 'org.springframework.boot:spring-boot-starter'

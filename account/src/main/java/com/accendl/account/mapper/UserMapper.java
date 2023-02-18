@@ -1,6 +1,6 @@
 package com.accendl.account.mapper;
 
-import com.accendl.account.entity.Users;
+import com.accendl.account.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author wuqingjian
  * @since 2023-02-18
  */
-public interface UsersMapper extends BaseMapper<Users> {
+public interface UserMapper extends BaseMapper<User> {
 
 }

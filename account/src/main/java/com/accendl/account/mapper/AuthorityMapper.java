@@ -1,6 +1,6 @@
 package com.accendl.account.mapper;
 
-import com.accendl.account.entity.Authorities;
+import com.accendl.account.entity.Authority;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author wuqingjian
  * @since 2023-02-18
  */
-public interface AuthoritiesMapper extends BaseMapper<Authorities> {
+public interface AuthorityMapper extends BaseMapper<Authority> {
 
 }

@@ -12,19 +12,19 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SpringWebSecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // @formatter:off
-        http
-                .headers(headers->headers.frameOptions(frameOptions->frameOptions.sameOrigin()))
-                .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults());
-        // @formatter:on
-        return http.build();
-    }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        // @formatter:off
+//        http
+//                .headers(headers->headers.frameOptions(frameOptions->frameOptions.sameOrigin()))
+//                .authorizeHttpRequests((authorize) -> authorize
+//                        .anyRequest().authenticated()
+//                )
+//                .httpBasic(withDefaults())
+//                .formLogin(withDefaults());
+//        // @formatter:on
+//        return http.build();
+//    }
 
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 the original author or authors.
+ * Copyright 2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.accendl.account.dto;
+package com.accendl.myweibo.customuser;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,11 +35,23 @@ public class CustomUser implements Serializable {
 	@JsonIgnore
 	private final String password;
 
+	@JsonIgnore
+	private final String secret;
+
+	@JsonIgnore
+	private final String answer;
+
 	@JsonCreator
-	public CustomUser(long id, String email, String password) {
+	public CustomUser(long id, String email, String password, String secret, String answer) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
+		this.secret = secret;
+		this.answer = answer;
+	}
+
+	public CustomUser(CustomUser user) {
+		this(user.id, user.email, user.password, user.secret, user.answer);
 	}
 
 	public long getId() {
@@ -53,5 +65,14 @@ public class CustomUser implements Serializable {
 	public String getPassword() {
 		return this.password;
 	}
+
+	public String getSecret() {
+		return this.secret;
+	}
+
+	public String getAnswer() {
+		return this.answer;
+	}
+
 
 }

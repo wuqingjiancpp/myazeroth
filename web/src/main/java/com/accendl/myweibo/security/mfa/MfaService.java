@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2016 the original author or authors.
+ * Copyright 2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.accendl.myweibo.customuser;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+package com.accendl.myweibo.security.mfa;
 
-/**
- * Controller for exposing User information.
- *
- * @author Rob Winch
- */
-@RestController
-public class UserController {
+import com.j256.twofactorauth.TimeBasedOneTimePasswordUtil;
+import org.springframework.stereotype.Service;
 
-	@GetMapping("/user")
-	public CustomUser user(@CurrentUser CustomUser currentUser) {
-		return currentUser;
+import java.security.GeneralSecurityException;
+
+@Service
+public class MfaService {
+
+	public boolean check(String hexKey, String code) {
+		try {
+			return TimeBasedOneTimePasswordUtil.validateCurrentNumberHex(hexKey, Integer.parseInt(code), 10000);
+		}
+		catch (GeneralSecurityException ex) {
+			throw new IllegalArgumentException(ex);
+		}
 	}
 
 }

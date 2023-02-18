@@ -1,7 +1,7 @@
 package com.accendl.account.service;
 
-import com.accendl.account.dto.CustomUser;
+import com.accendl.account.dto.UserDTO;
 
 public interface IAccountService {
-    CustomUser findCustomUserByEmail(String email) throws Exception;
+    UserDTO findCustomUserByEmail(String email) throws Exception;
 }

@@ -1,6 +1,6 @@
 package com.accendl.account.service;
 
-import com.accendl.account.entity.Authorities;
+import com.accendl.account.entity.Authority;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author wuqingjian
  * @since 2023-02-18
  */
-public interface IAuthoritiesService extends IService<Authorities> {
+public interface IAuthorityService extends IService<Authority> {
 
 }

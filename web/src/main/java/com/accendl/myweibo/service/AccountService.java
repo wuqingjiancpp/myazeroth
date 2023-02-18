@@ -1,7 +1,8 @@
 package com.accendl.myweibo.service;
 
-import com.accendl.account.dto.CustomUser;
+import com.accendl.account.dto.UserDTO;
 import com.accendl.account.service.IAccountService;
+import com.accendl.myweibo.customuser.CustomUser;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ public class AccountService {
 
 
     public CustomUser findCustomUserByEmail(String username) throws Exception {
-        return iaccountService.findCustomUserByEmail(username);
+        UserDTO userDTO = iaccountService.findCustomUserByEmail(username);
+        return new CustomUser(userDTO.getId(), userDTO.getUsername(), userDTO.getPassword(),
+                userDTO.getSecret(), userDTO.getAnswer());
     }
 }
