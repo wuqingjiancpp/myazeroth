@@ -37,19 +37,24 @@
                 <td ><div class="col themed-grid-col" th:text="${serverInfo.peak}"></div></td>
             </tr>
             </tbody>
-        <tr>
-            <th><div class="col themed-grid-col" th:text="#{serverInfo.uptime}">ID</div></th>
-            <th><div class="col themed-grid-col" th:text="#{serverInfo.updateTimeDiff}">ID</div></th>
-            <th><div class="col themed-grid-col" th:text="#{serverInfo.averageDelay}">ID</div></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td ><div class="col themed-grid-col" th:text="${serverInfo.uptime}"></div></td>
-            <td ><div class="col themed-grid-col" th:text="${serverInfo.updateTimeDiff}"></div>ms</td>
-            <td ><div class="col themed-grid-col" th:text="${serverInfo.averageDelay}"></div>ms</td>
-        </tr>
-        </tbody>
+            <thead>
+            <tr>
+                <th><div class="col themed-grid-col" th:text="#{serverInfo.uptime}">ID</div></th>
+                <td ><div class="col themed-grid-col" th:text="${serverInfo.uptime}"></div></td>
+            </tr>
+            </thead>
+            <thead>
+            <tr>
+                <th><div class="col themed-grid-col" th:text="#{serverInfo.updateTimeDiff}">ID</div></th>
+                <th><div class="col themed-grid-col" th:text="#{serverInfo.averageDelay}">ID</div></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td ><div class="col themed-grid-col" th:text="${serverInfo.updateTimeDiff}"></div>ms</td>
+                <td ><div class="col themed-grid-col" th:text="${serverInfo.averageDelay}"></div>ms</td>
+            </tr>
+            </tbody>
         </table>
 
         </p>

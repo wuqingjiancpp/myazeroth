@@ -42,7 +42,7 @@ public class AzerothService {
             String peakText = serverText.substring(peakIndex, upTimeIndex);
             String upTimeText = serverText.substring(upTimeIndex, diffIndex);
             String diffText = serverText.substring(diffIndex, average);
-            String averageText = serverText.substring(average, serverText.length());
+            String averageText = serverText.substring(average);
 
             String[] playerStrs = playerText.split(": ");
             String[] charactersStrs = charactersText.split(": ");
@@ -63,7 +63,7 @@ public class AzerothService {
             String diffStr = diffStrs[1];
             serverInfo.setUpdateTimeDiff(Integer.parseInt(diffStr.substring(0, diffStr.length()-4)));
             String averageStr = averageStrs[1];
-            serverInfo.setAverageDelay(Integer.parseInt(playerStr.substring(0, averageStr.length()-6)));
+            serverInfo.setAverageDelay(Integer.parseInt(averageStr.substring(0, averageStr.length()-5)));
             return serverInfo;
         }else {
             ServerInfo serverInfo = new ServerInfo();
