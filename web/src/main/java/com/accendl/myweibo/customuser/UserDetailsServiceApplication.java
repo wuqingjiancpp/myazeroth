@@ -27,13 +27,13 @@ import org.springframework.context.annotation.Bean;
  *
  * @author Joe Grandja
  */
-@SpringBootApplication
+//@SpringBootApplication
 public class UserDetailsServiceApplication {
 
 
 
-	@Bean
-	MapCustomUserRepository userRepository() {
+//	@Bean
+//	MapCustomUserRepository userRepository() {
 		// the hashed password was calculated using the following code
 		// the hash should be done up front, so malicious users cannot discover the
 		// password
@@ -42,12 +42,12 @@ public class UserDetailsServiceApplication {
 		// String encodedPassword = encoder.encode("password");
 
 		// the raw password is "password"
-		String encodedPassword = "{bcrypt}$2a$10$h/AJueu7Xt9yh3qYuAXtk.WZJ544Uc2kdOKlHu2qQzCh/A3rq46qm";
+//		String encodedPassword = "{bcrypt}$2a$10$h/AJueu7Xt9yh3qYuAXtk.WZJ544Uc2kdOKlHu2qQzCh/A3rq46qm";
 
-		CustomUser customUser = new CustomUser(1L, "user@example.com", encodedPassword);
-		Map<String, CustomUser> emailToCustomUser = new HashMap<>();
-		emailToCustomUser.put(customUser.getEmail(), customUser);
-		return new MapCustomUserRepository(emailToCustomUser);
-	}
+//		CustomUser customUser = new CustomUser(1L, "user@example.com", encodedPassword);
+//		Map<String, CustomUser> emailToCustomUser = new HashMap<>();
+//		emailToCustomUser.put(customUser.getEmail(), customUser);
+//		return new MapCustomUserRepository(emailToCustomUser);
+//	}
 
 }

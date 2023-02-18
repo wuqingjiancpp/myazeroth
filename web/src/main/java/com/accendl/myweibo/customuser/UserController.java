@@ -15,6 +15,7 @@
  */
 package com.accendl.myweibo.customuser;
 
+import com.accendl.account.dto.CustomUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

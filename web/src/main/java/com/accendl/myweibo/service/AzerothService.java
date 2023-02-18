@@ -15,7 +15,6 @@ import java.util.Arrays;
 
 
 @Service
-@EnableDubbo
 public class AzerothService {
 
     private static final Logger logger = LoggerFactory.getLogger(AzerothService.class);

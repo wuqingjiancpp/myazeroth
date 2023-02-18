@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package com.accendl.myweibo.customuser;
+package com.accendl.account.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 
 /**
  * A custom user representation.
  *
  * @author Rob Winch
  */
-public class CustomUser {
+public class CustomUser implements Serializable {
 
 	private final long id;
 
