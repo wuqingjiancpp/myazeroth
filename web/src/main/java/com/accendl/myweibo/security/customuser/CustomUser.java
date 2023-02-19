@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.accendl.myweibo.customuser;
+package com.accendl.myweibo.security.customuser;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -73,6 +73,7 @@ public class CustomUser implements Serializable {
 	public String getAnswer() {
 		return this.answer;
 	}
+
 
 
 }

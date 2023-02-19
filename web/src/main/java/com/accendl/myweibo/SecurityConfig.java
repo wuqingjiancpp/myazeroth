@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package com.accendl.myweibo.security.mfa;
+package com.accendl.myweibo;
 
+import com.accendl.myweibo.security.mfa.MfaAuthentication;
+import com.accendl.myweibo.security.mfa.MfaAuthenticationHandler;
+import com.accendl.myweibo.security.mfa.MfaTrustResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.encrypt.AesBytesEncryptor;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.keygen.KeyGenerators;
@@ -38,18 +42,18 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain web(HttpSecurity http,
 			AuthorizationManager<RequestAuthorizationContext> mfaAuthorizationManager) throws Exception {
-		MfaAuthenticationHandler mfaAuthenticationHandler = new MfaAuthenticationHandler("/third-factor");
+		MfaAuthenticationHandler mfaAuthenticationHandler = new MfaAuthenticationHandler("/second-factor");
 		// @formatter:off
 		http
 			.headers(headers->headers.frameOptions(frameOptions->frameOptions.sameOrigin()))
 			.authorizeHttpRequests((authorize) -> authorize
-				.mvcMatchers( "/third-factor").access(mfaAuthorizationManager)
-//				.mvcMatchers("/second-factor", "/third-factor").access(mfaAuthorizationManager)
+				.mvcMatchers("/second-factor").access(mfaAuthorizationManager)
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form

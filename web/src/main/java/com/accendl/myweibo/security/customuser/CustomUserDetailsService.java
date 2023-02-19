@@ -1,4 +1,4 @@
-package com.accendl.myweibo.customuser;
+package com.accendl.myweibo.security.customuser;
 
 import com.accendl.myweibo.service.AccountService;
 import org.springframework.security.core.GrantedAuthority;

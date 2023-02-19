@@ -16,7 +16,7 @@
 
 package com.accendl.myweibo.security.mfa;
 
-import com.accendl.myweibo.customuser.CustomUser;
+import com.accendl.myweibo.security.customuser.CustomUser;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.codec.Hex;
@@ -51,7 +51,7 @@ public class MfaController {
 	private final String failedAuthenticationSecurityAnswer;
 
 	public MfaController(MfaService mfaService, BytesEncryptor encryptor, PasswordEncoder encoder,
-                         AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+			AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
 
 		this.mfaService = mfaService;
 		this.encryptor = encryptor;
@@ -70,14 +70,15 @@ public class MfaController {
 
 	@PostMapping("/second-factor")
 	public void processSecondFactor(@RequestParam("code") String code, MfaAuthentication authentication,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		MfaAuthenticationHandler handler = new MfaAuthenticationHandler("/third-factor");
+									HttpServletRequest request, HttpServletResponse response) throws Exception  {
 		String secret = getSecret(authentication);
 		if (this.mfaService.check(secret, code)) {
-			handler.onAuthenticationSuccess(request, response, authentication.getFirst());
+			SecurityContextHolder.getContext().setAuthentication(authentication.getFirst());
+			this.successHandler.onAuthenticationSuccess(request, response, authentication.getFirst());
 		}
 		else {
-			handler.onAuthenticationFailure(request, response, new BadCredentialsException("bad credentials"));
+			this.failureHandler.onAuthenticationFailure(request, response,
+					new BadCredentialsException("bad credentials"));
 		}
 	}
 

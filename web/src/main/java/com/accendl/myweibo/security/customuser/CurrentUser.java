@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.accendl.myweibo.customuser;
+package com.accendl.myweibo.security.customuser;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @AuthenticationPrincipal
 @Retention(RetentionPolicy.RUNTIME)

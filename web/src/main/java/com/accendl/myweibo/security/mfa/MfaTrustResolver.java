@@ -20,8 +20,6 @@ import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.core.Authentication;
 
-import java.io.Serializable;
-
 public class MfaTrustResolver implements AuthenticationTrustResolver {
 
 	private final AuthenticationTrustResolver delegate = new AuthenticationTrustResolverImpl();
