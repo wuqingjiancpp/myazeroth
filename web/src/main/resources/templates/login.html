@@ -16,7 +16,8 @@
             Invalid username and password.</div>
         <div th:if="${param.logout}">
             You have been logged out.</div>
-        <h2 class="form-signin-heading">请登录</h2>
+        <img class="mb-4" src="/image/wotlk20230202.jpg" alt="" width="300" height="200">
+        <h2 class="form-signin-heading">Myazeroth.cn</h2>
         <p>
             <label for="username" class="sr-only">Username</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
@@ -26,7 +27,18 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         </p>
         <p>没有账号？请<a href="/signup">注册</a></p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+
+        <div class="container-fluid">
+            <p class="mt-5 mb-3 text-muted">
+                <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备2023003739号-1</a>
+                <br/>
+                CopyRight &copy; 2023–2024 wuqingjiancpp@qq.com 版权所有
+            </p>
+
+        </div>
     </form>
+
 </div>
 </body></html>
