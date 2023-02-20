@@ -53,7 +53,7 @@ public class SecurityConfig {
 		http
 			.headers(headers->headers.frameOptions(frameOptions->frameOptions.sameOrigin()))
 			.authorizeHttpRequests((authorize) -> authorize
-					.mvcMatchers("/signup", "/css/**", "/js/**", "/image/**").permitAll()
+					.mvcMatchers("/signup", "/css/**", "/js/**", "/image/**", "/index/**").permitAll()
 					.mvcMatchers("/second-factor").access(mfaAuthorizationManager)
 				.anyRequest().authenticated()
 			)

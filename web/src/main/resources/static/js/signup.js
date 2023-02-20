@@ -4,13 +4,8 @@ $("#form-sign-up").submit(function (){
     let email = $("#email").val();
     let password = $("#password").val();
     if (email != "" && password != ""){
-    if (checkEmail(email)){
-        flag.email = true;
-    }else{
-        flag.email = false;
-        alert("Email格式错误", "danger");
-    }
-    flag.password = true;
+        checkEmail(email);
+        flag.password = true;
     }else if (email == ""){
         flag.email =false;
         console.log("email不能为空")
@@ -26,14 +21,19 @@ $("#form-sign-up").submit(function (){
 function checkEmail(email){
     let emailPattern = new RegExp(/([\w\-]+\@[\w\-]+\.[\w\-]+)/);
     console.log(emailPattern.test(email));
-    return emailPattern.test(email);
+    if (emailPattern.test(email)){
+        $("#email").blur();
+    }else{
+        flag.email = false;
+        alert("Email格式错误", "danger");
+    }
 }
 
 $("#email").blur(function () {
     let email = this.value;
     if (email != ""){
         console.log("ajax校验email="+email)
-        $.get( "checkEmailExists/"+email, function( data ) {
+        $.get( "index/checkEmailExists/"+email, function( data ) {
             console.log("data="+data)
             if (data == "ok"){
                 if (!flag.email){
