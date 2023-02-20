@@ -31,14 +31,20 @@ public class AccountService {
     public CustomUser findCustomUserByEmail(String username) throws Exception {
         UserDTO userDTO = iaccountService.findCustomUserByEmail(username);
 
-        String hexSecret = userDTO.getSecret();
+        if (userDTO == null){
+            logger.error("用户不存在");
+            return null;
+        }else {
+            String hexSecret = userDTO.getSecret();
 
-        String encrypted = new String(Hex.encode(encryptor.encrypt(hexSecret.getBytes())));
-        logger.info("encrypted="+encrypted);
+            String encrypted = new String(Hex.encode(encryptor.encrypt(hexSecret.getBytes())));
+            logger.info("encrypted=" + encrypted);
 
-        CustomUser customUser = new CustomUser(userDTO.getId(), userDTO.getUsername(), userDTO.getPassword(),
-                encrypted, userDTO.getAnswer());
-        logger.info(customUser.toString());
-        return customUser;
+            CustomUser customUser = new CustomUser(userDTO.getId(), userDTO.getUsername(), userDTO.getPassword(),
+                    encrypted, userDTO.getAnswer());
+            logger.info(customUser.toString());
+
+            return customUser;
+        }
     }
 }

@@ -33,10 +33,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         tmp.setUsername(email);
         Wrapper<User> usersWrapper = new QueryWrapper<>(tmp);
         User user = userMapper.selectOne(usersWrapper);
-        logger.info(user.toString());
         if (user == null){
-            throw new RuntimeException("用户不存在");
+            logger.error("用户不存在");
+            return null;
         }else{
+            logger.info(user.toString());
             return new UserDTO(user.getId(), user.getPhone(), user.getEmail(), user.getUsername(),
                     user.getPassword(), user.getSecret(), user.getAnswer(), user.getEnabled());
         }

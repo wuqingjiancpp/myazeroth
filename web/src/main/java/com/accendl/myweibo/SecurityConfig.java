@@ -53,10 +53,15 @@ public class SecurityConfig {
 		http
 			.headers(headers->headers.frameOptions(frameOptions->frameOptions.sameOrigin()))
 			.authorizeHttpRequests((authorize) -> authorize
-				.mvcMatchers("/second-factor").access(mfaAuthorizationManager)
+					.mvcMatchers("/signup", "/css/**", "/js/**", "/image/**").permitAll()
+					.mvcMatchers("/second-factor").access(mfaAuthorizationManager)
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
+				.loginPage("/login").permitAll()
+				.defaultSuccessUrl("/")
+				.failureForwardUrl("/login?error").permitAll()
+//				.failureUrl("/login?error")
 				.successHandler(mfaAuthenticationHandler)
 				.failureHandler(mfaAuthenticationHandler)
 			)
