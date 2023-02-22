@@ -28,6 +28,16 @@ public class UserDTO implements Serializable {
         this.enabled = enabled;
     }
 
+    private String base32Key;
+
+    public String getBase32Key() {
+        return base32Key;
+    }
+
+    public void setBase32Key(String base32Key) {
+        this.base32Key = base32Key;
+    }
+
     private Integer id;
 
     private String phone;
@@ -119,6 +129,7 @@ public class UserDTO implements Serializable {
         ", secret = " + secret +
         ", answer = " + answer +
         ", enabled = " + enabled +
+        ", base32Key = " + base32Key +
         "}";
     }
 }

@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
     UserDTO findCustomUserByEmail(String email) throws Exception;
+
+    UserDTO createUser(UserDTO userDTO) throws Exception;
 }

@@ -19,4 +19,9 @@ public class AccountServiceImpl implements IAccountService {
     public UserDTO findCustomUserByEmail(String email) throws Exception {
         return userService.findCustomUserByEmail(email);
     }
+
+    @Override
+    public UserDTO createUser(UserDTO userDTO) throws Exception {
+        return userService.createUser(userDTO);
+    }
 }
