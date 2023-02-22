@@ -4,6 +4,7 @@ import com.accendl.azeroth.service.impl.AccountServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 @SpringBootTest
 public class TestAccountService {
@@ -12,6 +13,6 @@ public class TestAccountService {
     private AccountServiceImpl accountService;
     @Test
     public void testCreate() throws Exception {
-        accountService.create("test", "test");
+        Assert.isTrue(accountService.create("test4", "test"), "Az账户创建失败");
     }
 }
