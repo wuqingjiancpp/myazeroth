@@ -1,6 +1,6 @@
 package com.accendl.azeroth.service;
 
-public interface ServerService {
+public interface IServerService {
 
     String info() throws Exception;
 }

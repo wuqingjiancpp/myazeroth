@@ -15,27 +15,24 @@
  */
 package com.accendl.azeroth.snoop;
 
-import com.accendl.azeroth.service.impl.ServerServiceImpl;
+import com.accendl.azeroth.service.HttpContentFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
-import org.apache.dubbo.qos.server.Server;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CompletableFuture;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+
+@Component
 public class HttpSnoopClientHandler extends SimpleChannelInboundHandler<HttpObject> {
 
-//    public static CompletableFuture<HttpContent> future = new CompletableFuture<>();
-
-    public static HttpContent httpContent;
+    public static HttpContentFuture<String> httpContentFuture;
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, HttpObject msg) {
+    public void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception{
         if (msg instanceof HttpResponse) {
             HttpResponse response = (HttpResponse) msg;
 
@@ -60,13 +57,17 @@ public class HttpSnoopClientHandler extends SimpleChannelInboundHandler<HttpObje
         }
         if (msg instanceof HttpContent) {
             HttpContent content = (HttpContent) msg;
-            httpContent = new DefaultHttpContent(content.content().copy());
 
-            System.err.print(content.content().toString(CharsetUtil.UTF_8));
+            httpContentFuture = new HttpContentFuture<>(ctx.executor());
+            String message = content.copy().content().toString(CharsetUtil.UTF_8);
+            httpContentFuture.setContent(message);
+
+            System.err.print(message);
             System.err.flush();
 
             if (content instanceof LastHttpContent) {
                 System.err.println("} END OF CONTENT");
+
                 ctx.close();
             }
         }

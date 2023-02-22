@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 
 @SpringBootTest
-public class TestServerService {
+public class TestIServerService {
 
     @Autowired
     private ServerServiceImpl serverService;

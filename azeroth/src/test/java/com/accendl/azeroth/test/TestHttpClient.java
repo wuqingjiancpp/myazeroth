@@ -1,42 +1,38 @@
-package com.accendl.azeroth.service.impl;
+package com.accendl.azeroth.test;
 
 import com.accendl.azeroth.service.HttpContentFuture;
-import com.accendl.azeroth.service.IServerService;
+import com.accendl.azeroth.service.impl.AccountServiceImpl;
 import com.accendl.azeroth.snoop.HttpSnoopClient;
 import com.accendl.azeroth.snoop.HttpSnoopClientHandler;
+import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
 import io.netty.channel.ChannelFuture;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.util.CharsetUtil;
-import org.apache.dubbo.config.annotation.DubboService;
+import io.netty.util.concurrent.Future;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.accendl.azeroth.snoop.HttpSnoopClientHandler.httpContentFuture;
+import java.util.concurrent.FutureTask;
 
-@Component
-@DubboService(version = "1.0.0")
-public class ServerServiceImpl implements IServerService {
+@SpringBootTest
+public class TestHttpClient {
 
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
-    private final HttpSnoopClient httpSnoopClient;
-    private final HttpSnoopClientHandler httpSnoopClientHandler;
+    @Autowired
+    private HttpSnoopClient httpSnoopClient;
 
-    public ServerServiceImpl(HttpSnoopClient httpSnoopClient, HttpSnoopClientHandler httpSnoopClientHandler) {
-        Assert.notNull(httpSnoopClient, "HttpSnoopClient must not be null!");
-        this.httpSnoopClient = httpSnoopClient;
-        Assert.notNull(httpSnoopClientHandler, "HttpSnoopClientHandler must not be null!");
-        this.httpSnoopClientHandler = httpSnoopClientHandler;
-    }
+    @Autowired
+    private HttpSnoopClientHandler httpSnoopClientHandler;
 
-    @Override
-    public String info() throws Exception {
+    @Test
+    public void testFuture() throws Exception {
         String command = "server info";
-
         ChannelFuture future = httpSnoopClient.post(command);
+
         future.awaitUninterruptibly();
 
         // Now we are sure the future is completed.
@@ -51,9 +47,8 @@ public class ServerServiceImpl implements IServerService {
             // Connection established successfully
             logger.info("Connection established successfully");
             String message = (String) httpSnoopClientHandler.httpContentFuture.get();
-            return message;
+            logger.info("message="+message);
         }
-        return "";
-    }
 
+    }
 }

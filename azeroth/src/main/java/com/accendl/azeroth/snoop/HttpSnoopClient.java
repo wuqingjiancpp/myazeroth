@@ -15,8 +15,6 @@
  */
 package com.accendl.azeroth.snoop;
 
-import com.accendl.azeroth.AzerothServerConfig;
-import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -26,17 +24,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.*;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-
-import java.net.URI;
-import com.accendl.azeroth.service.impl.ServerServiceImpl;
-import org.springframework.util.Assert;
 
 /**
  * A simple HTTP client that prints out the content of the HTTP response to
@@ -45,12 +35,17 @@ import org.springframework.util.Assert;
 @Component
 public final class HttpSnoopClient {
 
-
     @Value("${azeroth.server.host}")
     public String host;
 
     @Value("${azeroth.server.port}")
     public int port;
+
+    private final HttpSnoopClientInitializer httpSnoopClientInitializer;
+
+    public HttpSnoopClient(HttpSnoopClientInitializer httpSnoopClientInitializer) {
+        this.httpSnoopClientInitializer = httpSnoopClientInitializer;
+    }
 
     public ChannelFuture post(String command) throws Exception {
 
@@ -61,7 +56,7 @@ public final class HttpSnoopClient {
             b.group(group)
                     .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
              .channel(NioSocketChannel.class)
-             .handler(new HttpSnoopClientInitializer());
+             .handler(httpSnoopClientInitializer);
 
             // Make the connection attempt.
             Channel ch = b.connect(host, port).sync().channel();

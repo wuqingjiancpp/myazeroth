@@ -15,17 +15,15 @@
  */
 package com.accendl.azeroth.snoop;
 
-import com.accendl.azeroth.service.impl.ServerServiceImpl;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpContentDecompressor;
-import io.netty.handler.ssl.SslContext;
 import org.springframework.stereotype.Component;
 
+@Component
 public class HttpSnoopClientInitializer extends ChannelInitializer<SocketChannel> {
-
 
     @Override
     public void initChannel(SocketChannel ch) {
