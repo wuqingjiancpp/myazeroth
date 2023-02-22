@@ -13,11 +13,13 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -43,26 +45,30 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public void sendQROfGoogleAuthenticator(String email, String secret) throws Exception {
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setRecipient(Message.RecipientType.TO,
-                        new InternetAddress(email));
-                mimeMessage.setFrom(new InternetAddress("wuqingjiancpp@qq.com"));
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-                helper.setSubject("注册成功！还有最后一步");
-                helper.setText("你的专属密钥已生成，请使用Google Authenticator App扫描二维码或者" +
-                        "输入密钥和Email获取6位验证码。请妥善保管好自己的密钥，不要把邮件转发给任何人！" +
-                        "wuqingjiancpp@qq.com和相关人员在任何情况下都不会索要密钥或者二维码");
-                String content = contentTemplate.replace("LABEL", ":"+email)
-                                .replace("PARAMETERS", "secret="+secret+"&issuer=");
-                CompletableFuture<String> completeFuture = QRUtils.generatorQRCode(content, logoUrl, email);
-                String fileName = completeFuture.get();
-                File file = new File(""+fileName);
-                helper.addAttachment("myazeroth.png", file);
-            }
-        };
+        try {
+            MimeMessagePreparator preparator = new MimeMessagePreparator() {
+                public void prepare(MimeMessage mimeMessage) throws Exception {
+                    mimeMessage.setRecipient(Message.RecipientType.TO,
+                            new InternetAddress(email));
+                    mimeMessage.setFrom(new InternetAddress("wuqingjiancpp@qq.com"));
+                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+                    helper.setSubject("注册成功！还有最后一步");
+                    helper.setText("你的专属密钥已生成，请使用Google Authenticator App扫描二维码或者" +
+                            "输入密钥和Email获取6位验证码。请妥善保管好自己的密钥，不要把邮件转发给任何人！" +
+                            "wuqingjiancpp@qq.com和相关人员在任何情况下都不会索要密钥或者二维码");
+                    String content = contentTemplate.replace("LABEL", ":"+email)
+                            .replace("PARAMETERS", "secret="+secret+"&issuer=");
+                    CompletableFuture<String> completeFuture = QRUtils.generatorQRCode(content, logoUrl, email);
+                    String fileName = completeFuture.get();
+                    helper.addAttachment("myazeroth.png", new File(fileName));
+                }
+            };
+            logger.info("send Email to "+email+ " with secret="+secret);
+            this.mailSender.send(preparator);
+        }catch (Exception e){
+            logger.error("send email fail"+e.getMessage());
+            throw new Exception(e);
+        }
 
-        logger.info("send Email to "+email+ " with secret="+secret);
-        this.mailSender.send(preparator);
     }
 }
