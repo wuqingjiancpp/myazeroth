@@ -25,9 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,10 +67,11 @@ public class MfaController {
 	}
 
 	@PostMapping("/second-factor")
-	public void processSecondFactor(@RequestParam("code") String code, MfaAuthentication authentication,
+	public void processSecondFactor(@ModelAttribute Code code, MfaAuthentication authentication,
 									HttpServletRequest request, HttpServletResponse response) throws Exception  {
+		String codeNum = code.toString();
 		String secret = getSecret(authentication);
-		if (this.mfaService.check(secret, code)) { //TODO
+		if (this.mfaService.check(secret, codeNum)) { //TODO
 //		if (true) {
 			SecurityContextHolder.getContext().setAuthentication(authentication.getFirst());
 			this.successHandler.onAuthenticationSuccess(request, response, authentication.getFirst());

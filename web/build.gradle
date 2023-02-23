@@ -88,6 +88,9 @@ tasks.named("jar") {
 
 tasks.named("bootRun") {
     sourceResources sourceSets.main
+    jvmArgs('--add-opens', 'java.base/java.lang=ALL-UNNAMED')
+    jvmArgs('--add-opens', 'java.base/java.math=ALL-UNNAMED')
+    jvmArgs('--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED')
 }
 
 
