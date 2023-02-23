@@ -11,11 +11,13 @@ import org.dom4j.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-@Component
-@DubboService(version = "1.0.0")
+@Service
+@DubboService(version = "1.0.0", protocol = "${dubbo.protocol.id}",
+        registry = "${dubbo.registry.id}", timeout = 30000)
 public class AccountServiceImpl implements AzAccountService {
 
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);

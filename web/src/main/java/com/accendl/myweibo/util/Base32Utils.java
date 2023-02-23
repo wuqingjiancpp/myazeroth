@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Base32Utils {
 
-    private static final byte[] ENCODE_TABLE = {
+    private static final char[] ENCODE_TABLE = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             '2', '3', '4', '5', '6', '7',
@@ -23,7 +23,7 @@ public class Base32Utils {
         }
         Collections.shuffle(shuffleList);
         for (int i=0;i<32;i++){
-            sb.append(ENCODE_TABLE[i]);
+            sb.append(ENCODE_TABLE[shuffleList.get(i)]);
         }
         return sb.toString();
     }

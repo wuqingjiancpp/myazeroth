@@ -72,8 +72,8 @@ public class MfaController {
 	public void processSecondFactor(@RequestParam("code") String code, MfaAuthentication authentication,
 									HttpServletRequest request, HttpServletResponse response) throws Exception  {
 		String secret = getSecret(authentication);
-//		if (this.mfaService.check(secret, code)) { TODO
-		if (true) {
+		if (this.mfaService.check(secret, code)) { //TODO
+//		if (true) {
 			SecurityContextHolder.getContext().setAuthentication(authentication.getFirst());
 			this.successHandler.onAuthenticationSuccess(request, response, authentication.getFirst());
 		}
