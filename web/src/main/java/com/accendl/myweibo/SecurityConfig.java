@@ -53,15 +53,13 @@ public class SecurityConfig {
 		http
 			.headers(headers->headers.frameOptions(frameOptions->frameOptions.sameOrigin()))
 			.authorizeHttpRequests((authorize) -> authorize
-					.mvcMatchers("/signup", "/css/**", "/js/**", "/image/**", "/index/**").permitAll()
+					.mvcMatchers("/signup", "/css/**", "/js/**", "/image/**",
+							"/index/**", "favicon.ico").permitAll()
 					.mvcMatchers("/second-factor").access(mfaAuthorizationManager)
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
 				.loginPage("/login").permitAll()
-				.defaultSuccessUrl("/")
-				.failureForwardUrl("/login?error").permitAll()
-//				.failureUrl("/login?error")
 				.successHandler(mfaAuthenticationHandler)
 				.failureHandler(mfaAuthenticationHandler)
 			)
@@ -105,7 +103,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	AuthenticationFailureHandler failureHandler() {
+	AuthenticationFailureHandler myFailureHandler() {
 		return new SimpleUrlAuthenticationFailureHandler("/login?error");
 	}
 

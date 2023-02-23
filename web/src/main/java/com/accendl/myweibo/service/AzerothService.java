@@ -1,17 +1,16 @@
 package com.accendl.myweibo.service;
 
-import com.accendl.azeroth.service.ServerService;
+import com.accendl.azeroth.service.AzAccountService;
+import com.accendl.azeroth.service.IServerService;
 import com.accendl.myweibo.dto.ServerInfo;
+import com.accendl.rocketmq.service.IAzerothService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 
 
 @Service
@@ -20,10 +19,18 @@ public class AzerothService {
     private static final Logger logger = LoggerFactory.getLogger(AzerothService.class);
 
     @DubboReference(version = "1.0.0")
-    private ServerService serverService;
+    private IServerService iserverService;
+
+    @DubboReference(version = "1.0.0")
+    private AzAccountService azAccountService;
+
+
+
+
+
 
     public ServerInfo getServerInfo() throws Exception {
-        String message = serverService.info();
+        String message = iserverService.info();
         Document document = DocumentHelper.parseText(message);
         Node node = document.selectSingleNode("//SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:executeCommandResponse/result");
 
@@ -72,4 +79,6 @@ public class AzerothService {
         }
 
     }
+
+
 }

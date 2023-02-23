@@ -1,7 +1,7 @@
 package com.accendl.rocketmq.service.impl;
 
 import com.accendl.account.dto.UserDTO;
-import com.accendl.account.service.IEmailService;
+import com.accendl.rocketmq.service.IAccountService;
 import com.alibaba.cloud.stream.binder.rocketmq.constant.RocketMQConst;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
@@ -14,25 +14,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
 @Service
-@DubboService(version = "1.0.0")
-public class EmailServiceImpl implements IEmailService {
+@DubboService(version = "1.0.0", protocol = "${dubbo.protocol.id}",
+        registry = "${dubbo.registry.id}", timeout = 30000)
+public class AccountServiceImpl implements IAccountService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     private final StreamBridge streamBridge;
 
-    public EmailServiceImpl(StreamBridge streamBridge) {
+    public AccountServiceImpl(StreamBridge streamBridge) {
         this.streamBridge = streamBridge;
     }
 
-    public boolean sendBase32Key(UserDTO userDTO){
+    public boolean sendBase32Key(UserDTO userDTO) throws Exception{
         MessageBuilder builder = MessageBuilder.withPayload(userDTO);
-        builder.setHeader("userId", userDTO.getId())
+        builder.setHeader("username", userDTO.getUsername())
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
                 .setHeader(RocketMQConst.USER_TRANSACTIONAL_ARGS, "binder");
         Message<UserDTO> msg = builder.build();
-        logger.info("send Msg:" + msg.toString());
-        return streamBridge.send("producer-out-0", msg);
+        try {
+            boolean flag = streamBridge.send("producer-out-1", msg);
+            if (flag){
+                logger.info("send Msg success:" + msg);
+                return true;
+            }else{
+                logger.info("send Msg fail:" + msg);
+                return false;
+            }
+        }catch (Exception e){
+            throw new Exception("发送base32key失败");
+        }
     }
 
 }

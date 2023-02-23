@@ -25,6 +25,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * @author <a href="mailto:fangjian0423@gmail.com">Jim</a>
@@ -43,16 +44,17 @@ public class TransactionListenerImpl implements TransactionListener {
 	@Override
 	public LocalTransactionState executeLocalTransaction(Message msg, Object arg) {
 		try {
-			int userId = Integer.parseInt(msg.getProperty("userId"));
-			if (userId > 0){
-				logger.info("userId="+userId);
+			String username = msg.getProperty("username");
+			if (StringUtils.hasText(username)){
+				logger.info("executer: username="+username +" commit");
 				return LocalTransactionState.COMMIT_MESSAGE;
 			}else {
-				logger.error("executer: " + new String(msg.getBody()) + " rollback");
+				logger.error("executer: " + new String(msg.getBody()) + " unknow");
 				return LocalTransactionState.UNKNOW;
 			}
 		} catch (Exception e){
 			logger.error("executer: " + new String(msg.getBody()) + " rollback");
+			logger.error("Exception="+e.getMessage());
 			return LocalTransactionState.ROLLBACK_MESSAGE;
 		}
 	}
@@ -66,8 +68,7 @@ public class TransactionListenerImpl implements TransactionListener {
 	public LocalTransactionState checkLocalTransaction(MessageExt msg) {
 		String payloadJson = new String(msg.getBody());
 		logger.info("check: " + payloadJson);
-		UserDTO userDTO = (UserDTO) JSON.parse(payloadJson);
-		if (userDTO.getId() != null){
+		if (StringUtils.hasText(payloadJson)){
 			return LocalTransactionState.COMMIT_MESSAGE;
 		}else{
 			return LocalTransactionState.ROLLBACK_MESSAGE;

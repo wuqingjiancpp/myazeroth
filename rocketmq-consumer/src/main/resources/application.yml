@@ -1,0 +1,22 @@
+server:
+  port: 28088
+spring:
+  application:
+    name: rocketmq-tx-consumer
+  cloud:
+    stream:
+      function:
+        definition: sendBase32Key;createAccount;
+      rocketmq:
+        binder:
+          name-server: 127.0.0.1:9876
+      bindings:
+        sendBase32Key-in-0:
+          destination: tx-sendBase32Key
+          group: tx-group-user
+        createAccount-in-0:
+          destination: tx-accountCreate
+          group: tx-group-azeroth
+logging:
+  level:
+    org.springframework.context.support: debug

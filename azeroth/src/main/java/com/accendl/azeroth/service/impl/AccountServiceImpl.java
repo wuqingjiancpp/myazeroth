@@ -71,8 +71,6 @@ public class AccountServiceImpl implements AzAccountService {
             }
         }
 
-
-
         return false;
     }
 

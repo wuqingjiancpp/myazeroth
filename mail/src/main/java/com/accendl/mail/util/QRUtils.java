@@ -1,7 +1,6 @@
 package com.accendl.mail.util;
 
 import com.accendl.mail.service.impl.UserServiceImpl;
-import com.alibaba.nacos.shaded.org.checkerframework.checker.index.qual.PolyUpperBound;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.common.BitMatrix;
@@ -36,6 +35,12 @@ public class QRUtils {
     private static final int LOGO_HEIGHT = 60;
 
     public static CompletableFuture<String> generatorQRCode(String content, String logoUrl, String email) throws Exception{
+        File dir = new File("QRfile");
+        if (!dir.exists()){
+            dir.mkdir();
+        }else if (!dir.isDirectory()){
+            throw new IOException("QRfile是个文件，创建目录失败");
+        }
         String fileName = "QRfile/base32key-"+ email + ".png";
         BufferedImage bufferedImage = createQRCode(content, QR_WIDTH, QR_HEIGHT,
                 logoUrl, LOGO_WIDTH,LOGO_HEIGHT);

@@ -22,24 +22,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.zxing:core:3.5.1'
-    implementation 'com.google.zxing:javase:3.5.1'
-
-    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.1.6'
-    implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.12'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2021.0.4.0'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2021.0.4.0'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.0.1'
-    implementation 'org.apache.dubbo:dubbo-registry-nacos:3.1.6'
-    implementation 'io.seata:seata-spring-boot-starter:1.6.1'
-
-    implementation 'io.netty:netty-all:4.1.87.Final'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-stream-rocketmq:2021.0.4.0'
 
     implementation project(":azeroth-interface")
     implementation project(":account-interface")
-    implementation project(":mail-interface")
-
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'

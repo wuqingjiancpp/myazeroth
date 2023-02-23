@@ -1,4 +1,4 @@
-package com.accendl.mail;
+package com.accendl.rocketmq;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableDubbo
-public class MailApplication {
+public class RocketMQTxConsumerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MailApplication.class, args);
+        SpringApplication.run(RocketMQTxConsumerApplication.class, args);
     }
 
 }

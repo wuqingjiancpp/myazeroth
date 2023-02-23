@@ -22,8 +22,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.zxing:core:3.5.1'
-    implementation 'com.google.zxing:javase:3.5.1'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-stream-rocketmq:2021.0.4.0'
 
     implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.1.6'
     implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.12'
@@ -36,10 +35,8 @@ dependencies {
     implementation 'io.netty:netty-all:4.1.87.Final'
 
     implementation project(":azeroth-interface")
-    implementation project(":account-interface")
     implementation project(":mail-interface")
-
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation project(":account-interface")
 
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'

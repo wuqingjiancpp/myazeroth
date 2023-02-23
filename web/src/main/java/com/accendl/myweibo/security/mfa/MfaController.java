@@ -44,20 +44,20 @@ public class MfaController {
 
 	private final AuthenticationSuccessHandler successHandler;
 
-	private final AuthenticationFailureHandler failureHandler;
+	private final AuthenticationFailureHandler myFailureHandler;
 
 	private final String failedAuthenticationSecret;
 
 	private final String failedAuthenticationSecurityAnswer;
 
 	public MfaController(MfaService mfaService, BytesEncryptor encryptor, PasswordEncoder encoder,
-			AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+						 AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler myFailureHandler) {
 
 		this.mfaService = mfaService;
 		this.encryptor = encryptor;
 		this.encoder = encoder;
 		this.successHandler = successHandler;
-		this.failureHandler = failureHandler;
+		this.myFailureHandler = myFailureHandler;
 
 		this.failedAuthenticationSecret = randomValue();
 		this.failedAuthenticationSecurityAnswer = this.encoder.encode(randomValue());
@@ -78,7 +78,7 @@ public class MfaController {
 			this.successHandler.onAuthenticationSuccess(request, response, authentication.getFirst());
 		}
 		else {
-			this.failureHandler.onAuthenticationFailure(request, response,
+			this.myFailureHandler.onAuthenticationFailure(request, response,
 					new BadCredentialsException("bad credentials"));
 		}
 	}
@@ -97,7 +97,7 @@ public class MfaController {
 			this.successHandler.onAuthenticationSuccess(request, response, authentication.getFirst());
 		}
 		else {
-			this.failureHandler.onAuthenticationFailure(request, response,
+			this.myFailureHandler.onAuthenticationFailure(request, response,
 					new BadCredentialsException("bad credentials"));
 		}
 	}
