@@ -53,20 +53,23 @@ const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 
 const alert = (message, type) => {
     let svg_href;
+    let label_type;
     if (type == "danger"){
         svg_href = "#exclamation-triangle-fill";
+        label_type = "Danger";
     }else if (type == "success"){
         svg_href = "#check-circle-fill";
+        label_type = "Success";
     }
     const wrapper = document.createElement('div')
     wrapper.innerHTML = [
-    `<div class="alert alert-${type} alert-dismissible d-flex align-items-center fade show" role="alert">`,
-    `<svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:" style="height: 16px;width: 16px">' +
-            '                <use xlink:href="${svg_href}"/>' +
-            '            </svg>`,
-    `   <div>${message}</div>`,
-    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-    '</div>'
+        `<div class="alert alert-${type} alert-dismissible d-flex align-items-center fade show" role="alert">`,
+        `<svg class="bi flex-shrink-0 me-2" role="img" aria-label="${label_type}:" style="width: 16px;height: 16px;">`,
+        `<use xlink:href="${svg_href}"/>`,
+        '</svg>',
+        `<div>${message}</div>`,
+        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+        '</div>'
     ].join('')
 
     alertPlaceholder.append(wrapper)
