@@ -11,10 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AccountApplication {
 
     public static void main(String[] args) throws Exception{
-//       ApplicationContext applicationContext =
-               SpringApplication.run(AccountApplication.class, args);
-//        ServerServiceImpl serverService = applicationContext.getBean(ServerServiceImpl.class);
-//        System.out.println(serverService.info());
+        SpringApplication.run(AccountApplication.class, args);
     }
 
 }

@@ -34,8 +34,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'docker build -t accendl/azeroth .'
-//                 sh 'docker image push accendl/azeroth'
+                sh 'docker build -f azeroth/Dockerfile -t accendl/azeroth .'
             }
         }
     }
