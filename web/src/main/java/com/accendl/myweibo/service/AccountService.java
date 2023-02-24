@@ -2,9 +2,11 @@ package com.accendl.myweibo.service;
 
 import com.accendl.account.dto.UserDTO;
 import com.accendl.account.service.IAccountService;
+import com.accendl.myweibo.security.customuser.CurrentUser;
 import com.accendl.myweibo.security.customuser.CustomUser;
 import com.accendl.myweibo.util.Base32Utils;
 //import io.seata.spring.annotation.GlobalTransactional;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
@@ -59,7 +61,7 @@ public class AccountService {
 
 
 
-//    @GlobalTransactional
+    @GlobalTransactional
     public boolean signup(String email, String password) throws Exception{
         UserDTO tmp = new UserDTO();
         tmp.setUsername(email);
@@ -93,4 +95,20 @@ public class AccountService {
         logger.info("注册成功");
         return true;
     }
+
+    public void resetPassword(CustomUser currentUser) {
+
+        // 重置az密码
+
+        // 重置账户密码
+
+    }
+
+    public void updatePassword(CustomUser currentUser, String password) {
+        // 更新az密码
+
+        // 更新账户密码
+    }
+
+
 }

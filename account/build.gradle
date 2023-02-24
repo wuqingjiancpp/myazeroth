@@ -36,7 +36,8 @@ dependencies {
 
     implementation 'io.netty:netty-all:4.1.87.Final'
 
-    implementation project(":azeroth-interface")
+    implementation 'com.alibaba:druid-spring-boot-starter:1.2.16'
+
     implementation project(":account-interface")
 
     implementation 'org.springframework.boot:spring-boot-starter'
