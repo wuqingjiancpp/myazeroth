@@ -4,6 +4,7 @@ import com.accendl.azeroth.httpclient.HttpCompletableClient;
 import com.accendl.azeroth.service.AzAccountService;
 import com.accendl.azeroth.snoop.HttpSnoopClient;
 import com.accendl.azeroth.snoop.HttpSnoopClientHandler;
+import com.accendl.azeroth.util.DomUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -48,31 +49,23 @@ public class AccountServiceImpl implements AzAccountService {
         String content = httpCompletableClient.sendCommand(command);
         logger.info("content="+content);
 
-        Document document = DocumentHelper.parseText(content);
-        Node resultNode = document.selectSingleNode("//SOAP-ENV:Envelope/SOAP-ENV:Body/ns1:executeCommandResponse/result");
-        if (resultNode != null){
-            //Account created: test3
-            String result = resultNode.getText();
-            logger.error(result);
-            if (StringUtils.hasText(result) && result.contains("Account created: "+username)){
-                return true;
-            }
-        }else{
-            Node faultNode = document.selectSingleNode("//SOAP-ENV:Envelope/SOAP-ENV:Body/SOAP-ENV:Fault");
-            String faultCode = faultNode.getDocument().selectSingleNode("//faultcode").getText();
-            String faultString = faultNode.getDocument().selectSingleNode("//faultstring").getText();
-            String detail = faultNode.getDocument().selectSingleNode("//detail").getText();
-
-            logger.error(faultCode);
-            logger.error(faultString);
-            //Account with this name already exist!
-            logger.error(detail);
-
-            if (StringUtils.hasText(detail) && detail.contains("Account with this name already exist!")){
-                return false;
-            }
+        String parsedContent = DomUtils.parseHttpContent(content);
+        if (StringUtils.hasText(parsedContent) && parsedContent.contains("Account created: "+username)){
+            return true;
+        } else if (StringUtils.hasText(parsedContent) && parsedContent.contains("Account with this name already exist!")) {
+            return false;
+        }else {
+            return false;
         }
+    }
 
+    @Override
+    public boolean resetPassword(String username, String password) throws Exception {
+        return false;
+    }
+
+    @Override
+    public boolean updatePassword(String username, String oldPassword, String newPassword) throws Exception {
         return false;
     }
 
