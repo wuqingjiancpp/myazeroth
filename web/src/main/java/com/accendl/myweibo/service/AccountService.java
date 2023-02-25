@@ -1,11 +1,9 @@
 package com.accendl.myweibo.service;
 
 import com.accendl.account.dto.UserDTO;
-import com.accendl.account.service.IAccountService;
-import com.accendl.myweibo.security.customuser.CurrentUser;
+import com.accendl.account.dubbo.IAccountService;
 import com.accendl.myweibo.security.customuser.CustomUser;
 import com.accendl.myweibo.util.Base32Utils;
-//import io.seata.spring.annotation.GlobalTransactional;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.encrypt.BytesEncryptor;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
