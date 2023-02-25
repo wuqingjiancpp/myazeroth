@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableDubbo
-public class MyweiboApplication {
+public class MyAzerothApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MyweiboApplication.class, args);
+        SpringApplication.run(MyAzerothApplication.class, args);
     }
 
 }
