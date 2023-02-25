@@ -14,6 +14,13 @@ public class TestUserService {
     private UserServiceImpl userService;
 
     @Test
+    public void testUpdatePassword() throws Exception {
+        String username = "user@example.com";
+        String password = "pwd";
+        Assert.isTrue(userService.updatePassword(username, password), "更新影响条数为0");
+    }
+
+    @Test
     public void testFindUserByEmail() throws Exception {
         Assert.notNull(userService.findCustomUserByEmail("user@example.com"), "用户不存在");
     }

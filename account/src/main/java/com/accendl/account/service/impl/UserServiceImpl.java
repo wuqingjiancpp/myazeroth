@@ -71,4 +71,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     }
 
+    @Override
+    public boolean updatePassword(String username, String password) throws Exception {
+        User user = new User();
+        user.setPassword(password);
+        User where = new User();
+        where.setUsername(username);
+        Wrapper<User> wrapper = new QueryWrapper<>(where);
+        try {
+            int count = userMapper.update(user, wrapper);
+            if (count>0){
+                logger.info("count="+count);
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+
+    }
+
 }

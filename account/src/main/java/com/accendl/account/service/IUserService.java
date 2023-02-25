@@ -16,4 +16,6 @@ public interface IUserService extends IService<User> {
     UserDTO findCustomUserByEmail(String email) throws Exception;
 
     UserDTO createUser(UserDTO userDTO) throws Exception;
+
+    boolean updatePassword(String username, String password) throws Exception;
 }

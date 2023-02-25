@@ -86,5 +86,9 @@ tasks.named("jar") {
     archiveClassifier = ''
 }
 
-
+tasks.named("test") {
+    jvmArgs('--add-opens', 'java.base/java.lang=ALL-UNNAMED')
+    jvmArgs('--add-opens', 'java.base/java.math=ALL-UNNAMED')
+    jvmArgs('--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED')
+}
 
