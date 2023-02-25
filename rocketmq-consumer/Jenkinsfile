@@ -22,7 +22,7 @@ pipeline {
             steps {
                 gradlew('assemble')
                 gradlew('publish')
-                stash includes: '**/build/libs/*.jar', name: 'app'
+                stash includes: '**/rocketmq-consumer/build/libs/*.jar', name: 'app'
             }
         }
         stage('Promotion') {
@@ -34,13 +34,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'docker build -t accendl/myweibo .'
-//                 sh 'docker image push accendl/myweibo'
+                sh 'docker build -f rocketmq-consumer/Dockerfile -t accendl/rocketmq-consumer .'
             }
         }
     }
 }
 
 def gradlew(String... args) {
-    sh "./gradlew :web:${args.join(' ')} -s"
+    sh "./gradlew :rocketmq-consumer:${args.join(' ')} -s"
 }

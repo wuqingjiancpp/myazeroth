@@ -21,7 +21,7 @@ import org.springframework.util.StringUtils;
         registry = "${dubbo.registry.id}", timeout = 30000)
 public class AccountServiceImpl implements AzAccountService {
 
-    private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     private final HttpSnoopClient httpSnoopClient;
 
@@ -61,6 +61,7 @@ public class AccountServiceImpl implements AzAccountService {
 
     @Override
     public boolean resetPassword(String username, String password) throws Exception {
+
         return false;
     }
 

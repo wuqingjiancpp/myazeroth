@@ -22,7 +22,7 @@ pipeline {
             steps {
                 gradlew('assemble')
                 gradlew('publish')
-                stash includes: '**/build/libs/*.jar', name: 'app'
+                stash includes: '**/mail/build/libs/*.jar', name: 'app'
             }
         }
         stage('Promotion') {
@@ -34,13 +34,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'docker build -t accendl/rmq-consumer .'
-//                 sh 'docker image push accendl/rmq-consumer'
+                sh 'docker build -f mail/Dockerfile -t accendl/mail .'
             }
         }
     }
 }
 
 def gradlew(String... args) {
-    sh "./gradlew :web:${args.join(' ')} -s"
+    sh "./gradlew :mail:${args.join(' ')} -s"
 }

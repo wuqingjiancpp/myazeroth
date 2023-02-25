@@ -22,7 +22,7 @@ pipeline {
             steps {
                 gradlew('assemble')
                 gradlew('publish')
-                stash includes: '**/build/libs/*.jar', name: 'app'
+                stash includes: '**/web/build/libs/*.jar', name: 'app'
             }
         }
         stage('Promotion') {
@@ -34,8 +34,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'docker build -t accendl/rmq-producer .'
-//                 sh 'docker image push accendl/rmq-producer'
+                sh 'docker build -f web/Dockerfile -t accendl/web .'
             }
         }
     }

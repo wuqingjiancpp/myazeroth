@@ -1,5 +1,3 @@
-server:
-  port: 28088
 spring:
   application:
     name: rocketmq-tx-producer
@@ -7,7 +5,7 @@ spring:
     stream:
       rocketmq:
         binder:
-          name-server: 127.0.0.1:9876
+          name-server: 172.20.0.7:9876
         bindings:
           producer-out-0:
             producer:

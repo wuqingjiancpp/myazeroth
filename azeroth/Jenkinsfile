@@ -22,7 +22,7 @@ pipeline {
             steps {
                 gradlew('assemble')
                 gradlew('publish')
-                stash includes: '**/build/libs/*.jar', name: 'app'
+                stash includes: '**/azeroth/build/libs/*.jar', name: 'app'
             }
         }
         stage('Promotion') {
