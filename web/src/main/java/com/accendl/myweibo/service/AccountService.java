@@ -114,6 +114,7 @@ public class AccountService {
         return true;
     }
 
+    @GlobalTransactional
     public boolean resetPassword(CustomUser currentUser, String resetPassword,
                                  String confirmPassword) throws Exception {
         //校验输入
