@@ -61,13 +61,33 @@ public class AccountServiceImpl implements AzAccountService {
 
     @Override
     public boolean resetPassword(String username, String password) throws Exception {
+        String commandTemplate = ".account set password $account $password $password";
+        String command = commandTemplate.replace("$account", username)
+                                .replace("$password", password);
+        String content = httpCompletableClient.sendCommand(command);
+        logger.info("content="+content);
 
-        return false;
+        String parsedContent = DomUtils.parseHttpContent(content);
+        if(parsedContent.contains("The password was changed")){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
-    public boolean updatePassword(String username, String oldPassword, String newPassword) throws Exception {
-        return false;
+    public boolean accountSetAddon(String username) throws Exception {
+        String commandTemplate = ".account set addon [$account] #addon";
+        String command = commandTemplate.replace("[$account]", username)
+                            .replace("#addon", 2+"");
+        String content = httpCompletableClient.sendCommand(command);
+        logger.info("content="+content);
+        String parsedContent = DomUtils.parseHttpContent(content);
+        if(parsedContent.contains("Account not exist: "+username.toUpperCase())){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 

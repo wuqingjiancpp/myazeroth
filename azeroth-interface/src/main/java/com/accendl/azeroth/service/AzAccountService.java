@@ -14,6 +14,8 @@ public interface AzAccountService {
 
     /**
      * .account set password $account $password $password
+     * .account set password crazywu@126.com 123456 123456
+     * The password was changed
      *
      * @param username
      * @param password
@@ -22,14 +24,14 @@ public interface AzAccountService {
      */
     boolean resetPassword(String username, String password) throws Exception;
 
+
     /**
-     * .account password $old_password $new_password $new_password
+     * .account set addon [$account] #addon
+     * .account set addon crazywu@126.com 2
      *
      * @param username
-     * @param oldPassword
-     * @param newPassword
      * @return
      * @throws Exception
      */
-    boolean updatePassword(String username, String oldPassword, String newPassword) throws Exception;
+    boolean accountSetAddon(String username) throws Exception;
 }

@@ -40,7 +40,6 @@ public class RocketMQService {
      * @return
      */
     public boolean accountCreate(String username, String password) throws Exception {
-        //todo 1 校验账户是否存在
         boolean flag = azerothService.accountCreate(username, password);
         if (flag){
             logger.info("创建账户成功");

@@ -25,10 +25,6 @@ public class AzerothService {
     private AzAccountService azAccountService;
 
 
-
-
-
-
     public ServerInfo getServerInfo() throws Exception {
         String message = iserverService.info();
         Document document = DocumentHelper.parseText(message);
@@ -80,5 +76,11 @@ public class AzerothService {
 
     }
 
+    public boolean updatePassword(String email, String newPassword) throws Exception {
+        return azAccountService.resetPassword(email, newPassword);
+    }
 
+    public boolean accountSetAddon(String email) throws Exception {
+        return azAccountService.accountSetAddon(email);
+    }
 }

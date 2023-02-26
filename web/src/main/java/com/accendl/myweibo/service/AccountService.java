@@ -13,6 +13,9 @@ import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.encrypt.BytesEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.regex.Pattern;
 
 @Service
 public class AccountService {
@@ -60,6 +63,16 @@ public class AccountService {
 
     @GlobalTransactional
     public boolean signup(String email, String password) throws Exception{
+        // 校验输入
+        if (!StringUtils.hasText(email) || !StringUtils.hasText(password)){
+            logger.error("请输入email 和 密码");
+            return false;
+        }
+        if (!Pattern.matches("([\\w\\-]+\\@[\\w\\-]+\\.[\\w\\-]+)", email)){
+            logger.error("email 格式错误");
+            return false;
+        }
+
         UserDTO tmp = new UserDTO();
         tmp.setUsername(email);
 
@@ -77,9 +90,17 @@ public class AccountService {
         tmp.setSecret(secret);
 
         UserDTO userDTO = iaccountService.createUser(tmp);
-        logger.info("账户创建成功="+userDTO.getId());
+
         if (userDTO == null){
             throw new Exception("账户创建失败");
+        }else{
+            logger.info("账户创建成功="+userDTO.getId());
+        }
+
+        boolean flag = azerothService.accountSetAddon(email);
+        if (flag){
+            logger.error("世界账户已存在");
+            throw new Exception("世界账户已存在: "+email);
         }
 
         boolean azFlag = rocketMQService.accountCreate(email, rowPassword);
@@ -93,18 +114,57 @@ public class AccountService {
         return true;
     }
 
-    public void resetPassword(CustomUser currentUser) {
-
+    public boolean resetPassword(CustomUser currentUser, String resetPassword,
+                                 String confirmPassword) throws Exception {
+        //校验输入
+        if (!StringUtils.hasText(resetPassword) || !StringUtils.hasText(confirmPassword)){
+            logger.error("resetPassword="+resetPassword, "confirmPassword="+confirmPassword);
+            return false;
+        }
+        if (!confirmPassword.equals(resetPassword)){
+            logger.error("两次输入的密码不相等");
+            return false;
+        }
         // 重置az密码
-
-        // 重置账户密码
-
+        return this.resetPassword(currentUser.getEmail(), resetPassword);
     }
 
-    public void updatePassword(CustomUser currentUser, String password) {
-        // 更新az密码
+    private boolean resetPassword(String username, String password) throws Exception{
+        boolean flag1 = azerothService.updatePassword(username, password);
+        if (flag1){
+            logger.info("更新azeroth密码成功");
+        }else {
+            logger.error("更新azeroth密码失败");
+            throw new Exception("更新azeroth密码失败: "+username);
+        }
+        // 重置账户密码
+        String encodePassword = encoder.encode(password);
+        boolean flag2 = iaccountService.updateUserPassword(username, encodePassword);
+        if (flag2){
+            logger.info("更新账户密码成功");
+        }else{
+            logger.error("更新账户密码失败");
+            throw new Exception("更新账户密码失败: "+username);
+        }
+        return true;
+    }
 
-        // 更新账户密码
+    @GlobalTransactional
+    public boolean updatePassword(CustomUser currentUser, String originalPassword, String newPassword,
+                                  String repeatNewPassword) throws Exception {
+        //校验输入
+        if (!StringUtils.hasText(originalPassword) || !StringUtils.hasText(newPassword)
+                || !StringUtils.hasText(repeatNewPassword)){
+            logger.error("originalPassword="+originalPassword, "newPassword="+newPassword,
+                    "repeatNewPassword="+repeatNewPassword);
+            return false;
+        }
+        if (!repeatNewPassword.equals(newPassword)){
+            logger.error("两次输入的密码不相等");
+            return false;
+        }
+        //校验输入与原始密码是否相等 TODO 用盐加密时
+        return this.resetPassword(currentUser.getEmail(), newPassword);
     }
 
 

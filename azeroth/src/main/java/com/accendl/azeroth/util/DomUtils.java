@@ -18,7 +18,7 @@ public class DomUtils {
         if (resultNode != null){
             //Account created: test3
             String result = resultNode.getText();
-            logger.error(result);
+            logger.info(result);
             return result;
         }else{
             Node faultNode = document.selectSingleNode("//SOAP-ENV:Envelope/SOAP-ENV:Body/SOAP-ENV:Fault");

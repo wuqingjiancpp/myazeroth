@@ -24,10 +24,16 @@ public class AccountController {
     }
 
     @PostMapping("resetPassword")
-    public String resetPassword(@CurrentUser CustomUser currentUser){
-        logger.info("resetPassword");
-        accountService.resetPassword(currentUser);
-        return "account/updatePassword";
+    public String resetPassword(@CurrentUser CustomUser currentUser,  @RequestParam String resetPassword,
+                                @RequestParam String confirmPassword) throws Exception {
+        boolean flag = accountService.resetPassword(currentUser, resetPassword, confirmPassword);
+        if (flag){
+            logger.info("resetPassword success");
+            return "redirect:/account/updatePasswordPage?success";
+        }else{
+            logger.info("resetPassword fail");
+            return "redirect:/account/updatePasswordPage?error";
+        }
     }
 
     @GetMapping("updatePasswordPage")
@@ -36,9 +42,15 @@ public class AccountController {
     }
 
     @PostMapping("updatePassword")
-    public String updatePassword(@CurrentUser CustomUser currentUser, @RequestParam String password){
-        logger.info("updatePassword");
-        accountService.updatePassword(currentUser, password);
-        return "";
+    public String updatePassword(@CurrentUser CustomUser currentUser, @RequestParam String originalPassword,
+                                 @RequestParam String newPassword, @RequestParam String repeatNewPassword) throws Exception {
+        boolean flag = accountService.updatePassword(currentUser, originalPassword, newPassword, repeatNewPassword);
+        if (flag){
+            logger.info("updatePassword success");
+            return "redirect:/account/updatePasswordPage?success";
+        }else{
+            logger.info("updatePassword fail");
+            return "redirect:/account/updatePasswordPage?error";
+        }
     }
 }
