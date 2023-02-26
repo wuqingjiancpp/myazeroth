@@ -80,6 +80,7 @@ public class AccountServiceImpl implements AzAccountService {
         String commandTemplate = ".account set addon [$account] #addon";
         String command = commandTemplate.replace("[$account]", username)
                             .replace("#addon", 2+"");
+        logger.info("send command="+command);
         String content = httpCompletableClient.sendCommand(command);
         logger.info("content="+content);
         String parsedContent = DomUtils.parseHttpContent(content);
