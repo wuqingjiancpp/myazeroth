@@ -1,4 +1,4 @@
-rootProject.name = 'myweibo'
+rootProject.name = 'myazeroth'
 include 'web'
 include 'azeroth'
 include 'azeroth-interface'
