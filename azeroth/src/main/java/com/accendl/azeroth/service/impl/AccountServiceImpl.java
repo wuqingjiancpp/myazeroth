@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AzAccountService {
         String commandTemplate = ".account create $account $password";
         String command = commandTemplate.replace("$account", username)
                 .replace("$password", password);
-
+        logger.info("send command="+command);
         String content = httpCompletableClient.sendCommand(command);
         logger.info("content="+content);
 
@@ -64,6 +64,7 @@ public class AccountServiceImpl implements AzAccountService {
         String commandTemplate = ".account set password $account $password $password";
         String command = commandTemplate.replace("$account", username)
                                 .replace("$password", password);
+        logger.info("send command="+command);
         String content = httpCompletableClient.sendCommand(command);
         logger.info("content="+content);
 
