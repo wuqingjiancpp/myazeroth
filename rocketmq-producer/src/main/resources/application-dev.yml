@@ -5,7 +5,7 @@ spring:
     stream:
       rocketmq:
         binder:
-          name-server: 127.0.0.1:9876
+          name-server: 192.168.1.100:9876,192.168.1.101:9876
         bindings:
           producer-out-0:
             producer:

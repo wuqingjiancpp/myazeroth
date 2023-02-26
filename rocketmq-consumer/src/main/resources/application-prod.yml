@@ -7,7 +7,7 @@ spring:
         definition: sendBase32Key;createAccount;
       rocketmq:
         binder:
-          name-server: 172.20.0.8:9876
+          name-server: 10.0.4.4:9876,10.0.4.9:9876,10.0.4.15:9876
       bindings:
         sendBase32Key-in-0:
           destination: tx-sendBase32Key
