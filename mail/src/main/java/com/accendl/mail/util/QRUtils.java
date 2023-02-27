@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileSystem;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
@@ -91,6 +92,7 @@ public class QRUtils {
                                   String logoUrl, Integer logoWidth, Integer logoHeight) throws Exception {
         // logo 源可为 File/InputStream/URL
         if (StringUtils.hasText(logoUrl)){
+
             Image src = ImageIO.read(new File(logoUrl));
             // 插入LOGO
             Graphics2D graph = source.createGraphics();

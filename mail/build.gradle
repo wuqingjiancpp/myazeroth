@@ -54,6 +54,9 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    jvmArgs('--add-opens', 'java.base/java.lang=ALL-UNNAMED')
+    jvmArgs('--add-opens', 'java.base/java.math=ALL-UNNAMED')
+    jvmArgs('--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED')
 }
 
 publishing {

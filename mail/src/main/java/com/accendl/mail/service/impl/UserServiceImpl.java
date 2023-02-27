@@ -36,7 +36,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     private static final String contentTemplate = "otpauth://totp/LABEL?PARAMETERS";
-    private static final String logoUrl = "wotlk20230202.jpg";
+    private static final String logoUrl = "image/wotlk20230202.jpg";
 
     /**
      * otpauth://TYPE/LABEL?PARAMETERS
@@ -75,7 +75,7 @@ public class UserServiceImpl implements IUserService {
             logger.info("send Email to "+email+ " with secret="+secret);
             this.mailSender.send(preparator);
         }catch (Exception e){
-            logger.error("send email fail"+e.getMessage());
+            logger.error("send email fail "+e.getMessage());
             throw new Exception(e);
         }
 
