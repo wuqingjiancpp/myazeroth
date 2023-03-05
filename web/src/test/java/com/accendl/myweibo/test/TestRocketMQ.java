@@ -1,8 +1,8 @@
 package com.accendl.myweibo.test;
 
-import com.accendl.myweibo.service.AccountService;
-import com.accendl.myweibo.service.AzerothService;
-import com.accendl.myweibo.service.RocketMQService;
+import com.accendl.web.service.AccountService;
+import com.accendl.web.service.AzerothService;
+import com.accendl.web.service.RocketMQService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
