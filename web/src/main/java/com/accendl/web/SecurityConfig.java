@@ -61,7 +61,7 @@ public class SecurityConfig {
 			.formLogin((form) -> form
 				.loginPage("/login").permitAll()
 				.successHandler(mfaAuthenticationHandler)
-				.failureHandler(mfaAuthenticationHandler)
+				.failureHandler(myFailureHandler())
 			)
 			.exceptionHandling((exceptions) -> exceptions
 				.withObjectPostProcessor(new ObjectPostProcessor<ExceptionTranslationFilter>() {

@@ -78,7 +78,7 @@ public class MfaController {
 		}
 		else {
 			this.myFailureHandler.onAuthenticationFailure(request, response,
-					new BadCredentialsException("bad credentials"));
+					new BadCredentialsException("验证码错误"));
 		}
 	}
 

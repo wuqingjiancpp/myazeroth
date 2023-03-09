@@ -83,7 +83,11 @@
                     <form class="form-signin" method="post" th:action="@{/login}">
                       <div th:if="${param.error}">
                         <div class="alert alert-danger" role="alert">
-                          非法的用户名和密码。
+                          <p>登录失败。
+                            <span th:if="${session.SPRING_SECURITY_LAST_EXCEPTION}">
+                              原因：<small th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.getMessage()}"></small>
+                            </span>
+                          </p>
                         </div>
                       </div>
                       <div th:if="${param.logout}">

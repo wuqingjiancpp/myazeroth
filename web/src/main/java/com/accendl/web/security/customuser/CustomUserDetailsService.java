@@ -1,11 +1,13 @@
 package com.accendl.web.security.customuser;
 
 import com.accendl.web.service.AccountService;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -28,11 +30,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         try {
             CustomUser customUser = accountService.findCustomUserByEmail(username);
             if (customUser == null) {
-                throw new UsernameNotFoundException("username " + username + " is not found");
+                throw new UsernameNotFoundException("用户名 " + username + " 没有找到");
             }
             return new CustomUserDetails(customUser);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
