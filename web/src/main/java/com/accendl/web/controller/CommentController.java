@@ -27,6 +27,8 @@ public class CommentController {
 
     @GetMapping("listPage")
     public String listPage(){
+
+//        int i = 1/0;
         return "/comment/list";
     }
 
