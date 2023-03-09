@@ -82,17 +82,24 @@
                   <div class="container-fluid">
                     <form class="form-signin" method="post" th:action="@{/login}">
                       <div th:if="${param.error}">
-                        <div class="alert alert-danger" role="alert">
-                          <p>登录失败。
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"
+                               style="width: 16px;height: 16px;"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                          <div>
+                            登录失败。
                             <span th:if="${session.SPRING_SECURITY_LAST_EXCEPTION}">
                               原因：<small th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.getMessage()}"></small>
                             </span>
-                          </p>
+                          </div>
                         </div>
                       </div>
                       <div th:if="${param.logout}">
-                        <div class="alert alert-info" role="alert">
-                          You have been logged out.
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"
+                               style="width: 16px;height: 16px;"><use xlink:href="#check-circle-fill"/></svg>
+                          <div>
+                            You have been logged out.
+                          </div>
                         </div>
                       </div>
                       <img class="mb-4" src="/image/wotlk20230202.jpg" alt="" width="300" height="200">
