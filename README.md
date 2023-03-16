@@ -7,6 +7,9 @@
 #### Prerequisite
 1. 64bit OS, Linux/Unix/Mac is recommended;
 2. 4G memory;
+3. 需要nacos注册中心;
+4. 需要seata服务;
+5. 需要rocketmq服务;
 
 #### docker network create
 ```shell
@@ -76,13 +79,18 @@ docker run --name accendl-web --rm --detach  \
   accendl/web
 ```
 
-### Run with source code
+### Run with source code (recommended)
 
 
 #### Prerequisite
 1. 64bit OS, Linux/Unix/Mac is recommended;
 2. 64bit JDK 17+;
-3. web 可以用 Gradle bootrun 启动，其他在idea-Services启动即可;
+3. 需要nacos注册中心;
+4. 需要seata服务;
+5. 需要rocketmq服务;
+6. web 可以用 Gradle bootrun 启动，其他在idea-Services启动即可;
+
+
 
 记得修改配置文件(你自己的nacos服务的ip和port，rocketmq服务的ip和port)和加入jvm参数
 ```shell
