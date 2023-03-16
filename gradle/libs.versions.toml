@@ -1,0 +1,31 @@
+[versions]
+springCloudAlibabaVersion = "2021.0.4.0"
+dubboVersion = "3.1.7"
+seataVersion = "1.6.1"
+mybatisPlusVersion = "3.5.3.1"
+mysqlConnectorVersion = "8.0.32"
+mybatisVersion = "3.0.1"
+nettyVersion = "4.1.89.Final"
+
+[libraries]
+spring-cloud-alibaba-dependencies = { module = "com.alibaba.cloud:spring-cloud-alibaba-dependencies", version.ref = "springCloudAlibabaVersion" }
+
+rocketmq = { module = "com.alibaba.cloud:spring-cloud-starter-stream-rocketmq" }
+dubbo = { module = "org.apache.dubbo:dubbo-spring-boot-starter", version.ref = "dubboVersion" }
+nacos-discovery = { module = "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery" }
+nacos-config = { module = "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config" }
+seata = { module = "io.seata:seata-spring-boot-starter", version.ref = "seataVersion" }
+
+mybatis-plus = { module = "com.baomidou:mybatis-plus-boot-starter", version.ref = "mybatisPlusVersion" }
+mysql-connector = { module = "com.mysql:mysql-connector-j", version.ref = "mysqlConnectorVersion" }
+mybatis = { module = "org.mybatis.spring.boot:mybatis-spring-boot-starter", version.ref = "mybatisVersion" }
+
+netty = { module = "io.netty:netty-all", version.ref = "nettyVersion" }
+
+[bundles]
+spring-cloud-alibaba = ["dubbo", "nacos-discovery", "nacos-config"]
+mybatis = ["mybatis-plus", "mysql-connector", "mybatis"]
+
+[plugins]
+springboot = { id = "org.springframework.boot", version = "2.7.9" }
+springdm = { id = "io.spring.dependency-management", version = "1.0.15.RELEASE" }

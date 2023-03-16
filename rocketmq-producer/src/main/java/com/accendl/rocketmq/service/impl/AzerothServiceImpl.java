@@ -30,11 +30,12 @@ public class AzerothServiceImpl implements IAzerothService {
     @Override
     public boolean accountCreate(String userName, String password) throws Exception{
         AzAccountDTO azAccountDTO = new AzAccountDTO(userName, password);
-        MessageBuilder builder = MessageBuilder.withPayload(azAccountDTO);
+        MessageBuilder<AzAccountDTO> builder = MessageBuilder.withPayload(azAccountDTO);
         builder.setHeader("username", azAccountDTO.getUsername())
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                .setHeader(RocketMQConst.USER_TRANSACTIONAL_ARGS, "binder");
-        Message<UserDTO> msg = builder.build();
+                .setHeader(RocketMQConst.USER_TRANSACTIONAL_ARGS, "binder")
+                .setHeader(RocketMQConst.PROPERTY_MAX_RECONSUME_TIMES, 3);
+        Message<AzAccountDTO> msg = builder.build();
         try {
             boolean flag = streamBridge.send("producer-out-0", msg);
             if (flag){

@@ -34,6 +34,19 @@ public class User implements Serializable {
 
     private Boolean enabled;
 
+    public User() {
+    }
+
+    public User(String phone, String email, String username, String password, String secret, String answer) {
+        this.phone = phone;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.secret = secret;
+        this.answer = answer;
+        this.enabled = true;
+    }
+
     public Integer getId() {
         return id;
     }

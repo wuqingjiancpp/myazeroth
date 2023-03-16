@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
+
 /**
  * @author <a href="mailto:fangjian0423@gmail.com">Jim</a>
  */
@@ -66,13 +68,9 @@ public class TransactionListenerImpl implements TransactionListener {
 	 */
 	@Override
 	public LocalTransactionState checkLocalTransaction(MessageExt msg) {
-		String payloadJson = new String(msg.getBody());
-		logger.info("check: " + payloadJson);
-		if (StringUtils.hasText(payloadJson)){
-			return LocalTransactionState.COMMIT_MESSAGE;
-		}else{
-			return LocalTransactionState.ROLLBACK_MESSAGE;
-		}
+		int crc = msg.getBodyCRC();
+		logger.info("check: " + crc);
+		return LocalTransactionState.COMMIT_MESSAGE;
 	}
 
 }

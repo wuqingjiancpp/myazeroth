@@ -1,16 +1,8 @@
 plugins {
     id "java"
-    id("org.springframework.boot") version "2.7.8"
-    id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    alias(libs.plugins.springboot)
+    alias(libs.plugins.springdm)
 }
-
-dependencyManagement {
-    imports {
-        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-    }
-}
-
-
 
 group = 'com.accendl'
 version = '0.0.1-SNAPSHOT'
@@ -20,10 +12,25 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    }
+}
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     implementation 'org.springframework.boot:spring-boot-starter'
+    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencies {
+    constraints{
+    }
 }
 
 tasks.named('test') {

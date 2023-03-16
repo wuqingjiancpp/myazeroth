@@ -29,6 +29,7 @@ public class AccountService {
 
     private final BytesEncryptor encryptor;
 
+
     public AccountService(PasswordEncoder encoder, BytesEncryptor encryptor,
                           AzerothService azerothService, RocketMQService rocketMQService) {
         this.encoder = encoder;
@@ -73,12 +74,8 @@ public class AccountService {
             return false;
         }
 
-        UserDTO tmp = new UserDTO();
-        tmp.setUsername(email);
-
         String rowPassword = password;
         String encodedPassword = encoder.encode(password);
-        tmp.setPassword(encodedPassword);
 
         // to sync your phone with the Google Authenticator secret, hand enter the value
 		// in base32Key
@@ -87,8 +84,12 @@ public class AccountService {
         Base32 base32 = new Base32();
         byte[] b = base32.decode(base32Key);
         String secret = org.apache.commons.codec.binary.Hex.encodeHexString(b);
-        tmp.setSecret(secret);
 
+        UserDTO tmp = UserDTO.builder()
+                        .username(email)
+                        .password(encodedPassword)
+                        .secret(secret)
+                        .build();
         UserDTO userDTO = iaccountService.createUser(tmp);
 
         if (userDTO == null){
@@ -108,7 +109,7 @@ public class AccountService {
             throw new Exception("世界服务器错误");
         }
 
-        rocketMQService.sendBase32Key(userDTO.getUsername(), base32Key);
+        rocketMQService.sendBase32Key(email, base32Key);
 
         logger.info("注册成功");
         return true;

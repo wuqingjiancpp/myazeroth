@@ -1,6 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.8'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    alias(libs.plugins.springboot)
+    alias(libs.plugins.springdm)
     id 'java'
     id 'maven-publish'
 }
@@ -26,13 +26,12 @@ dependencies {
     implementation 'org.springframework.security:spring-security-crypto'
     implementation 'com.j256.two-factor-auth:two-factor-auth:1.3'
 
-    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.1.6'
-    implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.12'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2021.0.4.0'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2021.0.4.0'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.0.1'
-    implementation 'org.apache.dubbo:dubbo-registry-nacos:3.1.6'
-    implementation('io.seata:seata-spring-boot-starter:1.6.1') {
+    implementation platform(libs.spring.cloud.alibaba.dependencies)
+
+    implementation libs.bundles.spring.cloud.alibaba
+    implementation libs.rocketmq
+
+    implementation(libs.seata) {
         exclude group: 'com.alibaba', module: 'druid'
     }
 
@@ -43,6 +42,8 @@ dependencies {
     implementation project(":azeroth-interface")
     implementation project(":account-interface")
     implementation project(":rocketmq-interface")
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
@@ -93,6 +94,7 @@ tasks.named("bootRun") {
     jvmArgs('--add-opens', 'java.base/java.lang=ALL-UNNAMED')
     jvmArgs('--add-opens', 'java.base/java.math=ALL-UNNAMED')
     jvmArgs('--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED')
+//    classpath configurations.developmentOnly
 }
 
 tasks.named("test") {

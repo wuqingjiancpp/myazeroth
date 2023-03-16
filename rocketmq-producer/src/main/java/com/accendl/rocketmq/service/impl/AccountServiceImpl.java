@@ -27,10 +27,12 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     public boolean sendBase32Key(UserDTO userDTO) throws Exception{
-        MessageBuilder builder = MessageBuilder.withPayload(userDTO);
+        UserDTO payload = new UserDTO(userDTO.getBase32Key(), userDTO.getUsername());
+        MessageBuilder<UserDTO> builder = MessageBuilder.withPayload(payload);
         builder.setHeader("username", userDTO.getUsername())
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                .setHeader(RocketMQConst.USER_TRANSACTIONAL_ARGS, "binder");
+                .setHeader(RocketMQConst.USER_TRANSACTIONAL_ARGS, "binder")
+                .setHeader(RocketMQConst.PROPERTY_MAX_RECONSUME_TIMES, 3);
         Message<UserDTO> msg = builder.build();
         try {
             boolean flag = streamBridge.send("producer-out-1", msg);

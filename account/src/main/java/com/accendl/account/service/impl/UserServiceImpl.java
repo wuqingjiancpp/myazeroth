@@ -40,33 +40,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return null;
         }else{
             logger.info(user.toString());
-            return new UserDTO(user.getId(), user.getPhone(), user.getEmail(), user.getUsername(),
-                    user.getPassword(), user.getSecret(), user.getAnswer(), user.getEnabled());
+            return UserDTO.builder().id(user.getId())
+                    .phone(user.getPhone())
+                    .email(user.getEmail())
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .secret(user.getSecret())
+                    .answer(user.getAnswer())
+                    .enabled(user.getEnabled())
+                    .build();
         }
     }
 
     @Override
     public UserDTO createUser(UserDTO userDTO) throws Exception {
-        User user = new User();
-        user.setEmail(userDTO.getUsername());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
-        user.setSecret(userDTO.getSecret());
-        user.setAnswer(userDTO.getAnswer());
-        user.setEnabled(true);
+        User user = new User(null, userDTO.getUsername(), userDTO.getUsername(), userDTO.getPassword(),
+                userDTO.getSecret(), userDTO.getAnswer());
         int count=0;
         try {
             count = userMapper.insert(user);
             logger.info("count="+count);
-            userDTO.setId(user.getId());
-            return userDTO;
+            if(count == 0){
+                return null;
+            }else{
+                return UserDTO.builder().id(user.getId()).build();
+            }
         }catch (Exception e){
             logger.info("创建用户失败："+e.getMessage());
             throw new Exception(e);
-        }finally {
-            if (count == 0){
-                return null;
-            }
         }
 
     }

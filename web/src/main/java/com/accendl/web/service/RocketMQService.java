@@ -20,9 +20,9 @@ public class RocketMQService {
     private IAzerothService azerothService;
 
     public void sendBase32Key(String username, String base32key) throws Exception{
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUsername(username);
-        userDTO.setBase32Key(base32key);
+        UserDTO userDTO = UserDTO.builder()
+                            .username(username)
+                            .base32Key(base32key).build();
         boolean flag = accountService.sendBase32Key(userDTO);
         if (flag){
             logger.info("raccountService.sendBase32Key success");

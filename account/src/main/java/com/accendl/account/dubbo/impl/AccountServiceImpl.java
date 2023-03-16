@@ -7,7 +7,8 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 
 @Service
-@DubboService(version = "1.0.0")
+@DubboService(version = "1.0.0", protocol = "${dubbo.protocol.id}",
+        registry = "${dubbo.registry.id}", timeout = 6000)
 public class AccountServiceImpl implements IAccountService {
 
     private final UserServiceImpl userService;
