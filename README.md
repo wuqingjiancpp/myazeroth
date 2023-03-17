@@ -2,6 +2,28 @@
 
 ## Quick Start
 
+### Run with source code (recommended)
+
+#### Prerequisite
+1. 64bit OS, Linux/Unix/Mac is recommended;
+2. 64bit JDK 17+;
+3. 需要nacos注册中心;
+4. 需要seata服务;
+5. 需要rocketmq服务;
+6. web 可以用 Gradle bootrun 启动，其他在idea-Services启动即可;
+
+记得修改配置文件(你自己的nacos服务的ip和port，rocketmq服务的ip和port)和加入jvm参数
+```shell
+--add-opens java.base/java.lang.reflect=ALL-UNNAMED 
+--add-opens java.base/java.lang=ALL-UNNAMED 
+--add-opens java.base/java.math=ALL-UNNAMED
+```
+
+seata需要在seata.properties中加入你自己的配置，默认是default
+```shell
+service.vgroupMapping.my_azeroth_tx_group=default
+```
+
 ### Run with docker
 
 #### Prerequisite
@@ -77,31 +99,6 @@ docker run --name accendl-web --rm --detach  \
 --ip 172.20.0.2   \
  --publish 8102:8102 --publish 20882:20882   \
   accendl/web
-```
-
-### Run with source code (recommended)
-
-
-#### Prerequisite
-1. 64bit OS, Linux/Unix/Mac is recommended;
-2. 64bit JDK 17+;
-3. 需要nacos注册中心;
-4. 需要seata服务;
-5. 需要rocketmq服务;
-6. web 可以用 Gradle bootrun 启动，其他在idea-Services启动即可;
-
-
-
-记得修改配置文件(你自己的nacos服务的ip和port，rocketmq服务的ip和port)和加入jvm参数
-```shell
---add-opens java.base/java.lang.reflect=ALL-UNNAMED 
---add-opens java.base/java.lang=ALL-UNNAMED 
---add-opens java.base/java.math=ALL-UNNAMED
-```
-
-seata需要在seata.properties中加入你自己的配置，默认是default
-```shell
-service.vgroupMapping.my_azeroth_tx_group=default
 ```
 
 ## License
