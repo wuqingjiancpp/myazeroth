@@ -65,8 +65,9 @@ public class UserServiceImpl implements IUserService {
                         "</html>", true);
                 String content = contentTemplate.replace("LABEL", ":"+email)
                         .replace("PARAMETERS", "secret="+secret+"&issuer=");
-                CompletableFuture<String> completeFuture = QRUtils.generatorQRCode(content, logoUrl, email);
-                String fileName = completeFuture.get();
+//                CompletableFuture<String> completeFuture = QRUtils.generatorQRCode(content, logoUrl, email);
+                String fileName = QRUtils.generatorQRCode(content, logoUrl, email);
+//                String fileName = completeFuture.get();
 //                    helper.addAttachment("myazeroth.png", new File(fileName));
                 helper.addInline("myazeroth", new File(fileName));
             }

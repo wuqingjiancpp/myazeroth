@@ -26,6 +26,7 @@ import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.encrypt.AesBytesEncryptor;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.keygen.KeyGenerators;
@@ -51,7 +52,7 @@ public class SecurityConfig {
 		MfaAuthenticationHandler mfaAuthenticationHandler = new MfaAuthenticationHandler("/second-factor");
 		// @formatter:off
 		http
-			.headers(headers->headers.frameOptions(frameOptions->frameOptions.sameOrigin()))
+			.headers(headers->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 			.authorizeHttpRequests((authorize) -> authorize
 					.mvcMatchers("/signup", "/css/**", "/js/**", "/image/**",
 							"/index/**", "/favicon.ico", "/login").permitAll()

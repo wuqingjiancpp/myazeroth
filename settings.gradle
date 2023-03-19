@@ -9,4 +9,7 @@ include 'rocketmq-consumer'
 include 'mail'
 include 'mail-interface'
 include 'rocketmq-interface'
+include 'food'
+include 'food-interface'
+include 'common'
 

@@ -7,6 +7,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import io.netty.util.concurrent.CompleteFuture;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -23,9 +24,9 @@ import java.nio.file.FileSystem;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 public class QRUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(QRUtils.class);
     private static final String IMAGE_FORMAT = "png";
     private static final String CHARSET = "utf-8";
     private static final String BASE64_IMAGE = "data:image/png;base64,%s";
@@ -35,10 +36,14 @@ public class QRUtils {
     private static final int LOGO_WIDTH = 60;
     private static final int LOGO_HEIGHT = 60;
 
-    public static CompletableFuture<String> generatorQRCode(String content, String logoUrl, String email) throws Exception{
+    public static String generatorQRCode(String content, String logoUrl, String email) throws Exception{
         File dir = new File("QRfile");
         if (!dir.exists()){
-            dir.mkdir();
+           if (dir.mkdir()){
+               log.info("创建目录成功: "+dir.getName());
+           }else{
+               throw new IOException("创建目录失败: "+dir.getName());
+           }
         }else if (!dir.isDirectory()){
             throw new IOException("QRfile是个文件，创建目录失败");
         }
@@ -49,9 +54,10 @@ public class QRUtils {
             try (OutputStream outputStream = new FileOutputStream(fileName)) {
                 ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
             }
-            return CompletableFuture.completedFuture(fileName);
+//            return CompletableFuture.completedFuture(fileName);
+            return fileName;
         }else{
-            logger.error("bufferedImage为空");
+            log.error("bufferedImage为空");
             throw new Exception("创建二维码失败");
         }
     }

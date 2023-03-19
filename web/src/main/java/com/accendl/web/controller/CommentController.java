@@ -1,6 +1,7 @@
 package com.accendl.web.controller;
 
 import com.accendl.web.dto.Comment;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.datetime.DateFormatter;
@@ -15,9 +16,8 @@ import java.util.*;
 
 @Controller
 @RequestMapping("comment")
+@Slf4j
 public class CommentController {
-
-    private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
     private final DateFormatter dateFormatter;
 

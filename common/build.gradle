@@ -1,0 +1,71 @@
+plugins {
+    alias(libs.plugins.springboot)
+    alias(libs.plugins.springdm)
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.accendl'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'myRepo'
+        url = "https://accendl-maven.pkg.coding.net/repository/mymavenrepo/myweibo"
+        credentials {
+            username "myweibo-1660661200164"
+            password "639a9df034c0cb9c14b6ff8c7ad130fff8cce3c4"
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            artifact tasks.named("jar")
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'myRepo'
+            url = "https://accendl-maven.pkg.coding.net/repository/mymavenrepo/myweibo"
+            credentials {
+                username "myweibo-1660661200164"
+                password "639a9df034c0cb9c14b6ff8c7ad130fff8cce3c4"
+            }
+        }
+    }
+}
+
+java {
+    //withJavadocJar()
+    // withSourcesJar()
+}
+
+tasks.named("bootJar") {
+    archiveClassifier = 'boot'
+}
+
+tasks.named("jar") {
+    archiveClassifier = ''
+}
+
+
+
+
