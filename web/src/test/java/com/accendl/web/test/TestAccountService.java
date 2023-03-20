@@ -1,4 +1,4 @@
-package com.accendl.myweibo.test;
+package com.accendl.web.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

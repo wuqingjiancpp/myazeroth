@@ -1,4 +1,4 @@
-package com.accendl.myweibo.test;
+package com.accendl.web.test;
 
 import com.accendl.web.service.AccountService;
 import com.accendl.web.service.AzerothService;

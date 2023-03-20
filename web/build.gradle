@@ -31,6 +31,8 @@ dependencies {
     implementation libs.bundles.spring.cloud.alibaba
     implementation libs.rocketmq
 
+    implementation libs.netty
+
     implementation(libs.seata) {
         exclude group: 'com.alibaba', module: 'druid'
     }

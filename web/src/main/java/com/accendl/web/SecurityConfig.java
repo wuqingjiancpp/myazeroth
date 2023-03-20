@@ -47,10 +47,11 @@ import javax.crypto.SecretKey;
 public class SecurityConfig {
 
 	@Bean
-	SecurityFilterChain myWeb(HttpSecurity http,
+	SecurityFilterChain web(HttpSecurity http,
 			AuthorizationManager<RequestAuthorizationContext> mfaAuthorizationManager) throws Exception {
 		MfaAuthenticationHandler mfaAuthenticationHandler = new MfaAuthenticationHandler("/second-factor");
 		// @formatter:off
+
 		http
 			.headers(headers->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 			.authorizeHttpRequests((authorize) -> authorize

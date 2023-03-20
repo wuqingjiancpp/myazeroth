@@ -1,4 +1,4 @@
-package com.accendl.myweibo.test;
+package com.accendl.web.test;
 
 import org.apache.commons.codec.binary.Base32;
 

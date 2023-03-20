@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <style>
+    body, html,#allmap {width: 100%;height: 80%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+  </style>
+  <script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=dNVDIE6pgyaQGgLB1MRD14myVbfs7IMr"></script>
+  <title>地图展示</title>
+  <link href="/css/bootstrap-5.1.3-dist/css/bootstrap.css" rel="stylesheet">
+  <script src="/css/bootstrap-5.1.3-dist/js/bootstrap.bundle.js"></script>
+  <script src="/js/jquery-3.6.0.js"></script>
+
+</head>
+<body style="height: 768px">
+<div class="container-fluid" id="allmap"></div>
+
+<div class="container-fluid m-2">
+  <form id="form-getNearbyFoodFacility" th:action="@{/foodFacility/getNearbyFoodFacility}" method="post">
+  <div class="row">
+    <div class="col-5">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="address-addon">搜索地址</span>
+        <input type="text" id="suggestId" class="form-control" placeholder="洛杉矶" aria-label="address" aria-describedby="address-addon">
+      </div>
+    </div>
+
+      <div class="col-5">
+          <p>当前地址：<span id="currentAddressText"></span></p>
+          <input type="hidden" id="currentAddressVal" value="">
+        <input type="hidden" id="longitudeVal" value="">
+        <input type="hidden" id="latitudeVal" value="">
+        <input type="hidden" id="mercatorX" value="">
+        <input type="hidden" id="mercatorY" value="">
+      </div>
+      <div class="col-2">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">范围</label>
+          <select class="form-select" id="inputGroupSelect01">
+            <option value="3" selected>3km</option>
+            <option value="5">5km</option>
+            <option value="10">10km</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">查找附近的黑暗料理</button>
+
+  </div>
+  </form>
+</div>
+<script>
+$("#form-getNearbyFoodFacility").submit(function (){
+  let address = $("#currentAddressVal").val();
+  if (address == ""){
+    $("#currentAddressText").html("请在地图上选择地址");
+    return false;
+  }
+});
+</script>
+
+
+<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+<script>
+  // 全局变量记录插入的jsonp标签
+  window.clickPoint = null;
+  window.script = null;
+  window.success = function(res) {
+    console.log(res);
+    if (res.uii_err === 0 && res.content) {
+      var info = res.content;
+      $("#currentAddressText").html(info.addr);
+      $("#currentAddressVal").val(info.addr);
+      var sContent = `<h4 style='margin:0 0 5px 10px;'>${info.name}</h4>
+				<h5 style='margin:0 0 5px 10px;'>地址：${info.addr}</h4>
+				<h5 style='margin:0 0 35px 10px;'>分类：${info.tag !== '境外区域' || info.tag === info.name? info.tag : '地址'}</h4>`;
+      var infoWindow = new BMapGL.InfoWindow(sContent);  // 创建信息窗口对象
+      map.openInfoWindow(infoWindow, clickPoint); //开启信息窗口
+      // 移除插入的标签，防止越插入越多
+      document.getElementsByTagName('head')[0].removeChild(script);
+    }
+  }
+  // GL版命名空间为BMapGL
+  // 按住鼠标右键，修改倾斜角和角度
+  var map = new BMapGL.Map("allmap", {enableIconClick: true});    // 创建Map实例
+  map.centerAndZoom(new BMapGL.Point(-118.24532,34.05349), 13);  // 初始化地图,设置中心点坐标和地图级别
+  map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+  // map.setHeading(64.5);
+  // map.setTilt(73);
+  map.addEventListener('click', e => {
+    let longitude = e.latlng.lng;
+    let latitude = e.latlng.lat;
+    console.log('点击的经纬度：' + longitude + ', ' + latitude);
+    $("#longitudeVal").val(longitude);
+    $("#latitudeVal").val(latitude);
+    var mercator = map.lnglatToMercator(longitude, latitude);
+    console.log('点的墨卡托坐标：' + mercator[0] + ', ' + mercator[1]);
+    $("#mercatorX").val(mercator[0]);
+    $("#mercatorY").val(mercator[1]);
+
+    clickPoint = e.latlng;
+    const point = e.point;
+    const itemId = map.getIconByClickPosition(e);
+    if (itemId) {
+      let url = "//api.map.baidu.com/?qt=inf&uid="+itemId.uid+'&operate=mapclick&clicktype=tile&ie=utf-8&oue=1' +
+              '&fromproduct=jsapi&res=api&&ak=dNVDIE6pgyaQGgLB1MRD14myVbfs7IMr&callback=success'
+      script = document.createElement('script');
+      script.setAttribute('src', url);
+      document.getElementsByTagName('head')[0].appendChild(script);
+    }
+  });
+</script>
+<script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=dNVDIE6pgyaQGgLB1MRD14myVbfs7IMr"></script>
+<script type="text/javascript">
+  // 百度地图API功能
+  function G(id) {
+    return document.getElementById(id);
+  }
+
+  var ac = new BMapGL.Autocomplete(    //建立一个自动完成的对象
+          {"input" : "suggestId"
+            ,"mapLocation" : map
+          });
+
+  ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+    var str = "";
+    var _value = e.fromitem.value;
+    var value = "";
+    if (e.fromitem.index > -1) {
+      value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }
+    str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+    value = "";
+    if (e.toitem.index > -1) {
+      _value = e.toitem.value;
+      value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }
+    str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+    G("searchResultPanel").innerHTML = str;
+  });
+
+  var myValue;
+  ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+    var _value = e.item.value;
+    myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+    setPlace();
+  });
+
+  function setPlace(){
+    map.clearOverlays();    //清除地图上所有覆盖物
+    function myFun(){
+      var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+      console.log(pp)
+      console.log('点击的经纬度：' + pp.lng + ', ' + pp.lat);
+      var mercator = map.lnglatToMercator(pp.lng, pp.lat);
+      console.log('点的墨卡托坐标：' + mercator[0] + ', ' + mercator[1]);
+
+      map.centerAndZoom(pp, 18);
+      map.addOverlay(new BMapGL.Marker(pp));    //添加标注
+    }
+    var local = new BMapGL.LocalSearch(map, { //智能搜索
+      onSearchComplete: myFun
+    });
+    local.search(myValue);
+  }
+</script>
+</body>
+</html>
