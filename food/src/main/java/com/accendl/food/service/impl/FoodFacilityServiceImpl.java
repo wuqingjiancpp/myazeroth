@@ -29,12 +29,7 @@ public class FoodFacilityServiceImpl extends ServiceImpl<FoodFacilityMapper, Foo
     public IPage<FoodFacility> getList(int pageSize, int currentPage){
         FoodFacility foodFacility = new FoodFacility();
         foodFacility.setStatus(PermitStatus.APPROVED.toString());
-        Wrapper<FoodFacility> wrapper = new QueryWrapper<>();
-        Long count = foodFacilityMapper.selectCount(wrapper);
-        if (count > 0){
-            return foodFacilityMapper.selectPage(PageDTO.of(currentPage, pageSize, count), wrapper);
-        }else{
-            return null;
-        }
+        Wrapper<FoodFacility> wrapper = new QueryWrapper<>(foodFacility);
+        return foodFacilityMapper.selectPage(PageDTO.of(currentPage, pageSize), wrapper);
     }
 }
