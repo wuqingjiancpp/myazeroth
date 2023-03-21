@@ -1,6 +1,7 @@
 package com.accendl.food.service;
 
 import com.accendl.food.entity.FoodFacility;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFoodFacilityService extends IService<FoodFacility> {
 
+    IPage<FoodFacility> getList(int pageSize, int currentPage);
 }

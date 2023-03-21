@@ -88,22 +88,16 @@ public final class HttpSnoopClient {
             request.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
             request.headers().set(HttpHeaderNames.ACCEPT_ENCODING, HttpHeaderValues.GZIP);
 
-            // Set some example cookies.
-            request.headers().set(
-                    HttpHeaderNames.COOKIE,
-                    ClientCookieEncoder.STRICT.encode(
-                            new DefaultCookie("my-cookie", "foo"),
-                            new DefaultCookie("another-cookie", "bar")));
-
             // Send the HTTP request.
             ch.writeAndFlush(request);
-
-            // Wait for the server to close the connection.
-            ch.closeFuture().sync();
 
             HttpSnoopClientHandler httpSnoopClientHandler = (HttpSnoopClientHandler) ch.pipeline().last();
             String httpContent = httpSnoopClientHandler.getHttpContent();
             log.info(Thread.currentThread()+" httpContent="+httpContent);
+
+            // Wait for the server to close the connection.
+            ch.closeFuture().sync();
+
             return httpContent;
         } finally {
             // Shut down executor threads to exit.

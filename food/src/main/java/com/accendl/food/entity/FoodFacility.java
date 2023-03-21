@@ -62,13 +62,13 @@ public class FoodFacility implements Serializable {
 
     private Integer noiSent;
 
-    private LocalDateTime approved;
+    private String approved;
 
-    private LocalDate received;
+    private String received;
 
     private Integer priorPermit;
 
-    private LocalDateTime expirationDate;
+    private String expirationDate;
 
     private String location;
 
@@ -242,19 +242,19 @@ public class FoodFacility implements Serializable {
         this.noiSent = noiSent;
     }
 
-    public LocalDateTime getApproved() {
+    public String getApproved() {
         return approved;
     }
 
-    public void setApproved(LocalDateTime approved) {
+    public void setApproved(String approved) {
         this.approved = approved;
     }
 
-    public LocalDate getReceived() {
+    public String getReceived() {
         return received;
     }
 
-    public void setReceived(LocalDate received) {
+    public void setReceived(String received) {
         this.received = received;
     }
 
@@ -266,11 +266,11 @@ public class FoodFacility implements Serializable {
         this.priorPermit = priorPermit;
     }
 
-    public LocalDateTime getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDateTime expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 

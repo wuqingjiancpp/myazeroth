@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'p6spy:p6spy:3.9.1'
+
     implementation platform(libs.spring.cloud.alibaba.dependencies)
 
     implementation libs.bundles.spring.cloud.alibaba
