@@ -25,6 +25,7 @@ public class IpUtil {
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
+                    assert inet != null;
                     ipAddress = inet.getHostAddress();
                 }
             }

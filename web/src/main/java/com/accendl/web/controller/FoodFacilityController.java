@@ -1,5 +1,6 @@
 package com.accendl.web.controller;
 
+import com.accendl.web.baiduMap.WebServiceApi;
 import com.accendl.web.dto.MapLocation;
 import com.accendl.web.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class FoodFacilityController {
 
+    private final WebServiceApi webServiceApi;
+
+    public FoodFacilityController(WebServiceApi webServiceApi) {
+        this.webServiceApi = webServiceApi;
+    }
+
     @GetMapping("getListPage")
     public String getFoodFacilityPage() throws Exception {
         return "foodFacility/list";
@@ -22,6 +29,16 @@ public class FoodFacilityController {
     @GetMapping("getBaiduMapPage")
     public String getBaiduMapPage() throws Exception {
         return "foodFacility/baiduMap";
+    }
+
+    @PostMapping("getNearbyFoodFacility")
+    public String getNearbyFoodFacility(@RequestBody MapLocation mapLocation, BindingResult bindingResult) throws Exception {
+        if(bindingResult.hasErrors()){
+            return "redirect:/foodFacility/baiduMap";
+        }else{
+
+            return "foodFacility/list";
+        }
     }
 
     @PostMapping("choosePlace")
@@ -34,7 +51,8 @@ public class FoodFacilityController {
     }
 
     @ModelAttribute
-    public MapLocation getCurrentPlace(@RequestBody MapLocation mapLocation, HttpServletRequest request){
+    public MapLocation getCurrentPlace(@RequestBody(required = false) MapLocation mapLocation,
+                                       HttpServletRequest request) throws Exception {
         if (mapLocation != null){
             return MapLocation.builder()
                     .address(mapLocation.getAddress())
@@ -43,8 +61,8 @@ public class FoodFacilityController {
                     .build();
         }else{
             String ipAddress = IpUtil.getIpAddr(request);
-
-            return MapLocation.builder().build();
+            MapLocation tmp = webServiceApi.getLocationByIp(ipAddress);
+            return tmp;
         }
     }
 
