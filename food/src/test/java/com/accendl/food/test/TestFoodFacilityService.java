@@ -15,7 +15,7 @@ public class TestFoodFacilityService {
 
     @Test
     public void test(){
-        IPage<FoodFacility> facilityIPage = foodFacilityService.getList(10,2);
+        IPage<FoodFacility> facilityIPage = foodFacilityService.getPage(10,2);
         System.out.println(facilityIPage.getPages());
     }
 }

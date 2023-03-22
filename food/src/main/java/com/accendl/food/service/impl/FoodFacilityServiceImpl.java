@@ -1,5 +1,6 @@
 package com.accendl.food.service.impl;
 
+import com.accendl.food.dto.FoodFacilityDTO;
 import com.accendl.food.entity.FoodFacility;
 import com.accendl.food.enums.PermitStatus;
 import com.accendl.food.mapper.FoodFacilityMapper;
@@ -11,6 +12,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -26,10 +29,11 @@ public class FoodFacilityServiceImpl extends ServiceImpl<FoodFacilityMapper, Foo
     @Autowired
     private FoodFacilityMapper foodFacilityMapper;
 
-    public IPage<FoodFacility> getList(int pageSize, int currentPage){
+    public IPage<FoodFacility> getPage(int pageSize, int currentPage){
         FoodFacility foodFacility = new FoodFacility();
         foodFacility.setStatus(PermitStatus.APPROVED.toString());
         Wrapper<FoodFacility> wrapper = new QueryWrapper<>(foodFacility);
         return foodFacilityMapper.selectPage(PageDTO.of(currentPage, pageSize), wrapper);
     }
+
 }

@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFoodFacilityService extends IService<FoodFacility> {
 
-    IPage<FoodFacility> getList(int pageSize, int currentPage);
+    IPage<FoodFacility> getPage(int pageSize, int currentPage);
 }

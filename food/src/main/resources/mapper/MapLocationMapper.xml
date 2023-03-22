@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accendl.food.mapper.MapLocationMapper">
+    <insert id="batchInsert" >
+        insert into map_location (id, mercatorX, mercatorY) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.id}, #{item.mercatorX}, #{item.mercatorY})
+        </foreach>
+    </insert>
+</mapper>
