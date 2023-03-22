@@ -20,7 +20,7 @@ public class TestMapLocationService {
     public void testBatchInsert(){
         List<MapLocation> mapLocationList = new ArrayList<>();
         for (int i=0;i<10; i++){
-            MapLocation mapLocation = new MapLocation(++i, BigDecimal.valueOf(1.3+i), new BigDecimal(2.1+i));
+            MapLocation mapLocation = new MapLocation(++i, 1.3+i, 2.1+i);
             mapLocationList.add(mapLocation);
         }
         mapLocationService.batchUpdate(mapLocationList);

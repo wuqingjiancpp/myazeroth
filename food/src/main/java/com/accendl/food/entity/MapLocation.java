@@ -14,6 +14,7 @@ import java.math.BigDecimal;
  * @author wuqingjian
  * @since 2023-03-22
  */
+@Data
 @TableName("map_location")
 public class MapLocation implements Serializable {
 
@@ -21,39 +22,17 @@ public class MapLocation implements Serializable {
 
     private Integer id;
 
-    private BigDecimal mercatorX;
+    private double mercatorX;
 
-    private BigDecimal mercatorY;
+    private double mercatorY;
 
-    public MapLocation(Integer id, BigDecimal mercatorX, BigDecimal mercatorY) {
+    public MapLocation(Integer id, double mercatorX, double mercatorY) {
         this.id = id;
         this.mercatorX = mercatorX;
         this.mercatorY = mercatorY;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public BigDecimal getMercatorX() {
-        return mercatorX;
-    }
-
-    public void setMercatorX(BigDecimal mercatorX) {
-        this.mercatorX = mercatorX;
-    }
-
-    public BigDecimal getMercatorY() {
-        return mercatorY;
-    }
-
-    public void setMercatorY(BigDecimal mercatorY) {
-        this.mercatorY = mercatorY;
-    }
 
     @Override
     public String toString() {

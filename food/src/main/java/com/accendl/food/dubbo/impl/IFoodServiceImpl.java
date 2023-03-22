@@ -3,8 +3,10 @@ package com.accendl.food.dubbo.impl;
 import com.accendl.food.dto.FoodFacilityDTO;
 import com.accendl.food.dto.MapLocationDTO;
 import com.accendl.food.entity.FoodFacility;
-import com.accendl.food.dubbo.FoodService;
+import com.accendl.food.dubbo.IFoodService;
+import com.accendl.food.entity.MapLocation;
 import com.accendl.food.service.IFoodFacilityService;
+import com.accendl.food.service.IMapLocationService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,14 @@ import java.util.function.Function;
 @Service
 @DubboService(version = "1.0.0", protocol = "${dubbo.protocol.id}",
         registry = "${dubbo.registry.id}", timeout = 6000)
-public class FoodServiceImpl implements FoodService {
+public class IFoodServiceImpl implements IFoodService {
 
     private final IFoodFacilityService foodFacilityServiceImpl;
+    private final IMapLocationService mapLocationServiceImpl;
 
-    public FoodServiceImpl(IFoodFacilityService foodFacilityServiceImpl) {
+    public IFoodServiceImpl(IFoodFacilityService foodFacilityServiceImpl, IMapLocationService mapLocationServiceImpl) {
         this.foodFacilityServiceImpl = foodFacilityServiceImpl;
+        this.mapLocationServiceImpl = mapLocationServiceImpl;
     }
 
     @Override
@@ -29,6 +33,7 @@ public class FoodServiceImpl implements FoodService {
         Function<FoodFacility, FoodFacilityDTO> mapper = e->(
                                     FoodFacilityDTO.builder()
                                             .id(e.getId())
+                                            .locationId(e.getLocationId())
                                             .address(e.getAddress())
                                             .latitude(e.getLatitude())
                                             .longitude(e.getLongitude())
@@ -38,6 +43,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public int batchUpdateMapLocationDTO(List<MapLocationDTO> mapLocationDTOList) {
-        return 0;
+        return mapLocationServiceImpl.batchUpdate(mapLocationDTOList.parallelStream()
+                .map(e->new MapLocation(e.getId(), e.getMercatorX(),e.getMercatorY())).toList());
     }
 }

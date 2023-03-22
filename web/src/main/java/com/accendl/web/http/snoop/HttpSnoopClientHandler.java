@@ -80,14 +80,12 @@ public class HttpSnoopClientHandler extends SimpleChannelInboundHandler<HttpObje
             System.err.print(content.content().toString(CharsetUtil.UTF_8));
             System.err.flush();
 
-            ctx.close().addListener((ChannelFutureListener) future -> {
-                boolean offered = blockingQueue.offer(message);
-                assert  offered;
-            });
-
             if (content instanceof LastHttpContent) {
                 System.err.println("} END OF CONTENT");
-                ctx.close();
+                ctx.close().addListener((ChannelFutureListener) future -> {
+                    boolean offered = blockingQueue.offer(message);
+                    assert  offered;
+                });
             }
         }
     }

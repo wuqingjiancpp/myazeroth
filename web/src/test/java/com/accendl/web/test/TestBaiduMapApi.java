@@ -26,4 +26,6 @@ public class TestBaiduMapApi {
                 .convertGpsToBaiduLocation("-118.21892734521,34.575429778924;-122.21892734521,37.575429778924");
         System.out.println(mapLocationList);
     }
+
+
 }

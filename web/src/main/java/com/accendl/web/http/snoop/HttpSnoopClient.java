@@ -43,6 +43,7 @@ public final class HttpSnoopClient {
 
 
     public String getHttpContent(String url) throws Exception{
+        log.info("url="+url);
         URI uri = new URI(url);
         String scheme = uri.getScheme() == null? "http" : uri.getScheme();
         String host = uri.getHost() == null? "127.0.0.1" : uri.getHost();

@@ -14,7 +14,7 @@ import java.util.List;
  * @author wuqingjian
  * @since 2023-03-18
  */
-public interface FoodService {
+public interface IFoodService {
 
     IPage<FoodFacilityDTO> getFoodFacilityDTOPage(int pageSize, int currentPage);
 
