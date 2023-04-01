@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @RequestMapping("foodFacility")
@@ -22,7 +24,9 @@ public class FoodFacilityController {
     }
 
     @GetMapping("getListPage")
-    public String getFoodFacilityPage() throws Exception {
+    public String getFoodFacilityPage(@ModelAttribute MapLocation mapLocation, BindingResult bindingResult) throws Exception {
+        if(bindingResult.hasErrors()){
+        }
         return "foodFacility/list";
     }
 
@@ -32,7 +36,7 @@ public class FoodFacilityController {
     }
 
     @PostMapping("getNearbyFoodFacility")
-    public String getNearbyFoodFacility(@RequestBody MapLocation mapLocation, BindingResult bindingResult) throws Exception {
+    public String getNearbyFoodFacility(@ModelAttribute MapLocation mapLocation, BindingResult bindingResult) throws Exception {
         if(bindingResult.hasErrors()){
             return "redirect:/foodFacility/baiduMap";
         }else{
@@ -41,17 +45,13 @@ public class FoodFacilityController {
         }
     }
 
-    @PostMapping("choosePlace")
-    public String choosePlace(@RequestBody MapLocation mapLocation, BindingResult bindingResult) throws Exception {
-        if(bindingResult.hasErrors()){
-            return "redirect:/foodFacility/baiduMap";
-        }else{
-            return "foodFacility/list";
-        }
+    @GetMapping("choosePlace")
+    public String choosePlace() throws Exception {
+        return "/foodFacility/baiduMap";
     }
 
     @ModelAttribute
-    public MapLocation getCurrentPlace(@RequestBody(required = false) MapLocation mapLocation,
+    public MapLocation getCurrentPlace(@ModelAttribute MapLocation mapLocation,
                                        HttpServletRequest request) throws Exception {
         if (mapLocation != null){
             return MapLocation.builder()
@@ -62,7 +62,16 @@ public class FoodFacilityController {
         }else{
             String ipAddress = IpUtil.getIpAddr(request);
             MapLocation tmp = webServiceApi.getLocationByIp(ipAddress);
-            return tmp;
+            if(tmp == null){
+                return MapLocation.builder()
+                        .address("开发环境或者调用API出错")
+                        .mercatorX(0)
+                        .mercatorY(0)
+                        .build();
+            }else{
+                return tmp;
+            }
+
         }
     }
 

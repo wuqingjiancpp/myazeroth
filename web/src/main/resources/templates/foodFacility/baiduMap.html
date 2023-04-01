@@ -17,7 +17,7 @@
 <div class="container-fluid" id="allmap"></div>
 
 <div class="container-fluid m-2">
-  <form id="form-getNearbyFoodFacility" th:action="@{/foodFacility/getNearbyFoodFacility}" method="post">
+  <form id="form-getNearbyFoodFacility" th:action="@{/foodFacility/getNearbyFoodFacility}" th:object="${mapLocation}" method="post">
   <div class="row">
     <div class="col-5">
       <div class="input-group mb-3">
@@ -27,12 +27,12 @@
     </div>
 
       <div class="col-5">
-          <p>当前地址：<span id="currentAddressText"></span></p>
-          <input type="hidden" id="currentAddressVal" name="address" value="">
+          <p>当前地址：<span id="currentAddressText" th:text="${mapLocation.address}"></span></p>
+          <input type="hidden" id="currentAddressVal" name="mapLocation.address" th:value="${mapLocation.address}">
         <input type="hidden" id="longitudeVal" name="" value="">
         <input type="hidden" id="latitudeVal" name="" value="">
-        <input type="hidden" id="mercatorX" name="mercatorX" value="">
-        <input type="hidden" id="mercatorY" name="mercatorY" value="">
+        <input type="hidden" id="mercatorX" name="mapLocation.mercatorX" th:value="${mapLocation.mercatorX}">
+        <input type="hidden" id="mercatorY" name="mapLocation.mercatorY" th:value="${mapLocation.mercatorY}">
       </div>
       <div class="col-2">
         <div class="input-group mb-3">

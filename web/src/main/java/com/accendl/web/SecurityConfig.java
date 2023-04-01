@@ -19,6 +19,7 @@ package com.accendl.web;
 import com.accendl.web.security.mfa.MfaAuthentication;
 import com.accendl.web.security.mfa.MfaAuthenticationHandler;
 import com.accendl.web.security.mfa.MfaTrustResolver;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -55,8 +56,8 @@ public class SecurityConfig {
 		http
 			.headers(headers->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 			.authorizeHttpRequests((authorize) -> authorize
-					.mvcMatchers("/signup", "/css/**", "/js/**", "/image/**",
-							"/index/**", "/favicon.ico", "/login", "/foodFacility/*").permitAll()
+					.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+					.mvcMatchers("/signup", "/index/**", "/login", "/foodFacility/*").permitAll()
 					.mvcMatchers("/second-factor").access(mfaAuthorizationManager)
 				.anyRequest().authenticated()
 			)

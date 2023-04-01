@@ -1,14 +1,19 @@
 package com.accendl.web.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+@Slf4j
 public class IpUtil {
+
     public static String getIpAddr(HttpServletRequest request) {
-        String ipAddress = null;
+        String ipAddress;
         try {
             ipAddress = request.getHeader("x-forwarded-for");
+            log.info("x-forwarded-for="+ipAddress);
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getHeader("Proxy-Client-IP");
             }
@@ -17,7 +22,8 @@ public class IpUtil {
             }
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getRemoteAddr();
-                if (ipAddress.equals("127.0.0.1")) {
+                log.info("remoteAddr="+ipAddress);
+                if (ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")) {
                     // 根据网卡取本机配置的IP
                     InetAddress inet = null;
                     try {
@@ -39,8 +45,7 @@ public class IpUtil {
         } catch (Exception e) {
             ipAddress = "";
         }
-        // ipAddress = this.getRequest().getRemoteAddr();
-
+        log.info("ipAddress="+ipAddress);
         return ipAddress;
     }
 }
