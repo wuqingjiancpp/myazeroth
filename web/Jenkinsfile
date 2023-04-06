@@ -35,7 +35,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'docker build -f web/Dockerfile -t accendl/web .'
-                sh 'cat /var/jenkins_home/docker_password.txt | docker login --username accendl --password-stdin'
+                sh 'cat /var/jenkins_home/my_docker_password.txt | docker login --username accendl --password-stdin'
                 sh 'docker image push accendl/web'
             }
         }
