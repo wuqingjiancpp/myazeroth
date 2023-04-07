@@ -36,3 +36,11 @@ create table myazeroth_business.food_facility
 
 create index index_food_items
     on myazeroth_business.food_facility (food_items);
+
+create table myazeroth_business.map_location
+(
+    id        int             not null
+        primary key,
+    mercatorX decimal(18, 10) null,
+    mercatorY decimal(18, 10) null
+);

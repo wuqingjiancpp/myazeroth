@@ -7,7 +7,7 @@
 #### Prerequisite
 1. 64bit OS, Linux/Unix/Mac is recommended;
 2. 64bit JDK 17+;
-3. 需要nacos注册中心;
+3. 需要nacos服务;
 4. 需要seata服务;
 5. 需要rocketmq服务;
 6. web 可以用 Gradle bootrun 启动，其他在idea-Services启动即可;
@@ -29,76 +29,37 @@ service.vgroupMapping.my_azeroth_tx_group=default
 #### Prerequisite
 1. 64bit OS, Linux/Unix/Mac is recommended;
 2. 4G memory;
-3. 需要nacos注册中心;
+3. 需要nacos服务;
 4. 需要seata服务;
 5. 需要rocketmq服务;
 
 #### docker network create
 ```shell
-docker network create --driver=bridge --subnet=172.20.0.0/16 azeroth
+docker需要 --subnet=172.20.0.0/16 的网段, 否则要修改com.accendl.myazeroth.compose.yaml
+的很多关于网络的配置
 ```
 
 #### docker volume create
 ```shell
 docker volume create accendl-mail-data
+docker volume create myazeroth-log-data
 ```
 
 #### Pull from [docker hub(accendl)](https://hub.docker.com/u/accendl)
 
 ```shell
-docker image pull accendl/account
-docker image pull accendl/azeroth
-docker image pull accendl/mail
-docker image pull accendl/rocketmq-producer
-docker image pull accendl/rocketmq-consumer
-docker image pull accendl/web
+docker compose pull 
 ```
 
-#### Run it (remember to order run)
+#### Run it (remember to modify to your own service configuration)
 
 ```shell
-1
-docker run --name accendl-account --rm --detach  \
---privileged --network azeroth --network-alias docker \
- --ip 172.20.0.5   \
- --publish 8105:8105 --publish 20885:20885 \
-  accendl/account 
+docker compose up --detach
+```
 
-2
-docker run --name accendl-azeroth --rm --detach  \
---privileged --network azeroth --network-alias docker \
- --ip 172.20.0.4   \
- --publish 8104:8104 --publish 20884:20884 \
-  accendl/azeroth 
-  
-3
-docker run --name accendl-mail --rm --detach  \
---privileged --network azeroth --network-alias docker \
- --ip 172.20.0.6   \
- --volume accendl-mail-data:/image:ro \
- --publish 8106:8106 --publish 20886:20886 \
-  accendl/mail 
-
-4
-docker run --name accendl-rocketmq-producer --rm --detach  \
---privileged --network azeroth --network-alias docker \
---ip 172.20.0.7   \
- --publish 8107:8107 --publish 20887:20887  \
-  accendl/rocketmq-producer
-  
-5
-docker run --name accendl-rocketmq-consumer --rm --detach  \
---privileged --network azeroth --network-alias docker \
---ip 172.20.0.8   \
- --publish 8108:8108 --publish 20888:20888 \
-  accendl/rocketmq-consumer
-
-6  
-docker run --name accendl-web --rm --detach  \
---privileged --network azeroth --network-alias docker \
---ip 172.20.0.2   \
- --publish 8102:8102 --publish 20882:20882   \
-  accendl/web
+#### Stop it
+```shell
+docker compose down
 ```
 
 ## License

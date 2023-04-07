@@ -5,8 +5,8 @@ services:
       - "8105:8105"
       - "20885:20885"
     networks:
-      - azeroth
-    ip: 172.20.0.5
+      azeroth:
+        ipv4_address: 172.20.0.5
     volumes:
       - myazeroth-log-data:/log
 
@@ -16,8 +16,8 @@ services:
       - "8104:8104"
       - "20884:20884"
     networks:
-      - azeroth
-    ip: 172.20.0.4
+      azeroth:
+        ipv4_address: 172.20.0.4
     volumes:
       - myazeroth-log-data:/log
 
@@ -27,8 +27,8 @@ services:
       - "8109:8109"
       - "20889:20889"
     networks:
-      - azeroth
-    ip: 172.20.0.9
+      azeroth:
+        ipv4_address: 172.20.0.9
     volumes:
       - myazeroth-log-data:/log
 
@@ -38,8 +38,8 @@ services:
       - "8106:8106"
       - "20886:20886"
     networks:
-      - azeroth
-    ip: 172.20.0.6
+      azeroth:
+        ipv4_address: 172.20.0.6
     volumes:
       - myazeroth-log-data:/log
       - accendl-mail-data:/image:ro
@@ -50,8 +50,8 @@ services:
       - "8107:8107"
       - "20887:20887"
     networks:
-      - azeroth
-    ip: 172.20.0.7
+      azeroth:
+        ipv4_address: 172.20.0.7
     volumes:
       - myazeroth-log-data:/log
 
@@ -61,8 +61,8 @@ services:
       - "8108:8108"
       - "20888:20888"
     networks:
-      - azeroth
-    ip: 172.20.0.8
+      azeroth:
+        ipv4_address: 172.20.0.8
     volumes:
       - myazeroth-log-data:/log
     depends_on:
@@ -75,8 +75,8 @@ services:
       - "8102:8102"
       - "20882:20882"
     networks:
-      - azeroth
-    ip: 172.20.0.2
+      azeroth:
+        ipv4_address: 172.20.0.2
     volumes:
       - myazeroth-log-data:/log
     depends_on:
@@ -84,3 +84,16 @@ services:
       - myazeroth-food
       - myazeroth-account
       - myazeroth-azeroth
+
+networks:
+  azeroth:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  myazeroth-log-data:
+    external: true
+  accendl-mail-data:
+    external: true
