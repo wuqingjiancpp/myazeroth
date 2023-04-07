@@ -65,6 +65,9 @@ services:
     ip: 172.20.0.8
     volumes:
       - myazeroth-log-data:/log
+    depends_on:
+      - myazeroth-rocketmq-producer
+      - myazeroth-mail
 
   myazeroth-web:
     image: accendl/web
@@ -76,3 +79,8 @@ services:
     ip: 172.20.0.2
     volumes:
       - myazeroth-log-data:/log
+    depends_on:
+      - myazeroth-rocketmq-producer
+      - myazeroth-food
+      - myazeroth-account
+      - myazeroth-azeroth

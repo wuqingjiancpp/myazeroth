@@ -43,5 +43,5 @@ pipeline {
 }
 
 def gradlew(String... args) {
-    sh "./gradlew :account:${args.join(' ')} -s"
+    sh "./gradlew :food:${args.join(' ')} -s"
 }
